@@ -26,18 +26,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AuthenticationAPI {
 
-    private static final String PLATFORM = "platform";
-    private static final String AUTHENTICATION = "impl";
-
     private static final String AUTHENTICATE = "authenticate";
     private static final String HEADERS_LOG = "${in.headers}";
 
-    private static final String DIRECT_TOKEN_FOUND = "direct:impl-token-found";
-    private static final String DIRECT_TOKEN_NOT_FOUND = "direct:impl-token-not-found";
-    private static final String DIRECT_LOGIN = "direct:impl-login";
-    private static final String DIRECT_LOGIN_WITH_KEY = "direct:impl-login-with-key";
-    private static final String DIRECT_REFRESH_TOKEN = "direct:impl-refresh-token";
-    private static final String TOKEN_CACHE_KEY = "token-cache-key";
+    private static final String DIRECT_TOKEN_FOUND = "direct:impl-token-found-novasoft";
+    private static final String DIRECT_TOKEN_NOT_FOUND = "direct:impl-token-not-found-novasoft";
+    private static final String DIRECT_LOGIN = "direct:impl-login-novasoft";
+    private static final String TOKEN_CACHE_KEY = "token-cache-key-novasoft";
     private static final String TOKEN = "token";
 
     private static final String TOKEN_CACHE_NAME = "tokenCache";
