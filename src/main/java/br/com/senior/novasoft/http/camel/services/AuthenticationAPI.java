@@ -114,7 +114,7 @@ public class AuthenticationAPI {
     private void tokenFound() {
         builder //
             .from(DIRECT_TOKEN_FOUND) //
-            .routeId("token-found") //
+            .routeId("token-found-novasoft") //
             .to("log:tokenFound") //
             .log(HEADERS_LOG) //
 
@@ -139,7 +139,7 @@ public class AuthenticationAPI {
     private void tokenNotFound() {
         builder //
             .from(DIRECT_TOKEN_NOT_FOUND) //
-            .routeId("token-not-found") //
+            .routeId("token-not-found-novasoft") //
             .to("log:tokenNotFound") //
             .log(HEADERS_LOG) //
             .setExchangePattern(InOut) //
@@ -158,7 +158,7 @@ public class AuthenticationAPI {
 
         builder //
             .from(DIRECT_LOGIN) //
-            .routeId("login") //
+            .routeId("login-novasoft") //
             .marshal(LOGIN_INPUT_FORMAT) //
             .to("log:login") //
             .log(HEADERS_LOG) //
