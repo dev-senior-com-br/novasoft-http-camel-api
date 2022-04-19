@@ -56,6 +56,8 @@ public class AuthenticationAPI {
     private final String route = "direct:novasoft-impl-" + id.toString();
     private final String to = "direct:novasoft-impl-response-" + id.toString();
 
+    public String url;
+
     public AuthenticationAPI(RouteBuilder builder) {
         this.builder = builder;
     }
@@ -153,6 +155,10 @@ public class AuthenticationAPI {
 
     private void login() {
         NovasoftHTTPRouteBuilder login = new NovasoftHTTPRouteBuilder(builder);
+
+        if (url != null) {
+            login.url(url);
+        }
 
         login.method("post").service(ServiceEnum.CUENTA).primitive("login");
 
