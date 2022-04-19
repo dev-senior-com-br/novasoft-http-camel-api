@@ -26,16 +26,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AuthenticationAPI {
 
-    private static final String AUTHENTICATE = "authenticate";
+    private static final String AUTHENTICATE = "authenticate-novasoft";
     private static final String HEADERS_LOG = "${in.headers}";
 
     private static final String DIRECT_TOKEN_FOUND = "direct:impl-token-found-novasoft";
     private static final String DIRECT_TOKEN_NOT_FOUND = "direct:impl-token-not-found-novasoft";
     private static final String DIRECT_LOGIN = "direct:impl-login-novasoft";
     private static final String TOKEN_CACHE_KEY = "token-cache-key-novasoft";
-    private static final String TOKEN = "token";
+    private static final String TOKEN = "token-novasoft";
 
-    private static final String TOKEN_CACHE_NAME = "tokenCache";
+    private static final String TOKEN_CACHE_NAME = "tokenCacheNovasoft";
     // Token cache size in bytes.
     private static final long TOKEN_CACHE_SIZE = 64000000;
     // Refresh token TTL in seconds (See environment variable KONG_REFRESH_TOKEN_TTL at https://git.senior.com.br/arquitetura/kong-rest-client/-/wikis/home).

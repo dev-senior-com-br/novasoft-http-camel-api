@@ -21,19 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-## [1.1.0] - 2022-04-04
-
-### Added
-
--   Entity primitive type.
-
-## [1.0.0] - 2022-03-11
-
-### Added
-
--   Integration consumer from Senior X events.
--   Integration for Senior X APIs.
-
 [Unreleased]: https://github.com/dev-senior-com-br/novasoft-http-camel-api/compare/0.0.5-alpha...HEAD
 
 [0.0.5-alpha]: https://github.com/dev-senior-com-br/novasoft-http-camel-api/compare/0.0.4-alpha...0.0.5-alpha
