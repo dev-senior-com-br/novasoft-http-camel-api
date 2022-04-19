@@ -23,6 +23,6 @@ public class LoginInput {
     public String password;
 
     @JsonProperty("connectionName")
-    private String connectionName;
+    public String connectionName;
 
 }
