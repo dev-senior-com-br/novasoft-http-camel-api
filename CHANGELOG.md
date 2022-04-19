@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.5-alpha] - 2022-04-19
+
 ## [0.0.4-alpha] - 2022-04-19
 
 ## [0.0.3-alpha] - 2022-04-19
@@ -32,7 +34,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Integration consumer from Senior X events.
 -   Integration for Senior X APIs.
 
-[Unreleased]: https://github.com/dev-senior-com-br/novasoft-http-camel-api/compare/0.0.4-alpha...HEAD
+[Unreleased]: https://github.com/dev-senior-com-br/novasoft-http-camel-api/compare/0.0.5-alpha...HEAD
+
+[0.0.5-alpha]: https://github.com/dev-senior-com-br/novasoft-http-camel-api/compare/0.0.4-alpha...0.0.5-alpha
 
 [0.0.4-alpha]: https://github.com/dev-senior-com-br/novasoft-http-camel-api/compare/0.0.3-alpha...0.0.4-alpha
 
