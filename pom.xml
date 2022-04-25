@@ -25,7 +25,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.parameters>true</maven.compiler.parameters>
 		<quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-
+		<lombok-version>1.18.24</lombok-version>
 		<camel-version>3.11.0</camel-version>
 		<jackson-version>2.12.4</jackson-version>
 
@@ -287,7 +287,6 @@
 			<artifactId>ehcache</artifactId>
 			<version>3.9.6</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
@@ -297,6 +296,12 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok-version}</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
