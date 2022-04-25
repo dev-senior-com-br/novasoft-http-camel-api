@@ -12,7 +12,9 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import br.com.senior.novasoft.http.camel.Utils.Enums.ServiceEnum;
+import br.com.senior.novasoft.http.camel.utils.enums.PrimitiveEnums;
+import br.com.senior.novasoft.http.camel.utils.enums.ServiceEnum;
+import br.com.senior.novasoft.http.camel.exceptions.NovasoftHTTPException;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.ProducerTemplate;
@@ -40,7 +42,7 @@ public class NovasoftHTTPRouteBuilder {
     protected String allowedInsecureHost = "{{novasoft.allowedinsecurehost}}";
     protected String method;
     protected ServiceEnum service;
-    protected String primitive;
+    protected PrimitiveEnums primitiveEnums;
 
     public NovasoftHTTPRouteBuilder(RouteBuilder builder) {
         this.builder = builder;
@@ -66,8 +68,8 @@ public class NovasoftHTTPRouteBuilder {
         return this;
     }
 
-    public NovasoftHTTPRouteBuilder primitive(String primitive) {
-        this.primitive = primitive;
+    public NovasoftHTTPRouteBuilder primitive(PrimitiveEnums primitiveEnums) {
+        this.primitiveEnums = primitiveEnums;
         return this;
     }
 
@@ -83,9 +85,9 @@ public class NovasoftHTTPRouteBuilder {
         }
 
         route += "/";
-        route += service.path;
+        route += service.getPath();
         route += "/";
-        route += primitive;
+        route += primitiveEnums.getPath();
 
         Message message = exchange.getMessage();
         message.setHeader("Content-Type", "application/json");

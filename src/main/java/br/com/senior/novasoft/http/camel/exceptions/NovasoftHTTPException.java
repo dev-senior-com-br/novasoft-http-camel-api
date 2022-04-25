@@ -1,4 +1,4 @@
-package br.com.senior.novasoft.http.camel.services;
+package br.com.senior.novasoft.http.camel.exceptions;
 
 public class NovasoftHTTPException extends RuntimeException {
 
@@ -11,5 +11,4 @@ public class NovasoftHTTPException extends RuntimeException {
     public NovasoftHTTPException(Throwable cause) {
         super(cause);
     }
-
 }

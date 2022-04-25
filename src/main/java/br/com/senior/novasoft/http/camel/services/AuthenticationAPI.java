@@ -1,6 +1,6 @@
 package br.com.senior.novasoft.http.camel.services;
 
-import static br.com.senior.novasoft.http.camel.entities.LoginInput.LOGIN_INPUT_FORMAT;
+import static br.com.senior.novasoft.http.camel.entities.login.LoginInput.LOGIN_INPUT_FORMAT;
 import static org.apache.camel.ExchangePattern.InOut;
 import static org.ehcache.config.builders.CacheConfigurationBuilder.newCacheConfigurationBuilder;
 import static org.ehcache.config.builders.CacheManagerBuilder.newCacheManagerBuilder;
@@ -12,9 +12,11 @@ import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.UUID;
 
-import br.com.senior.novasoft.http.camel.entities.LoginInput;
-import br.com.senior.novasoft.http.camel.entities.LoginOutput;
-import br.com.senior.novasoft.http.camel.Utils.Enums.ServiceEnum;
+import br.com.senior.novasoft.http.camel.entities.login.LoginInput;
+import br.com.senior.novasoft.http.camel.entities.login.LoginOutput;
+import br.com.senior.novasoft.http.camel.utils.enums.PrimitiveEnums;
+import br.com.senior.novasoft.http.camel.utils.enums.ServiceEnum;
+import br.com.senior.novasoft.http.camel.exceptions.AuthenticationException;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
@@ -91,7 +93,12 @@ public class AuthenticationAPI {
         .process(this::searchToken) //
 
         .choice() // Token found
-        .when(builder.method(this, "tokenFound")) //
+        .when(//
+                builder.method(//
+                        this,//
+                        "tokenFound"//
+                )//
+        )//
 
         .setExchangePattern(InOut) //
         .to(DIRECT_TOKEN_FOUND) //
@@ -160,7 +167,7 @@ public class AuthenticationAPI {
             login.url(url);
         }
 
-        login.method("post").service(ServiceEnum.CUENTA).primitive("login");
+        login.method("post").service(ServiceEnum.CUENTA).primitive(PrimitiveEnums.LOGIN);
 
         builder //
             .from(DIRECT_LOGIN) //

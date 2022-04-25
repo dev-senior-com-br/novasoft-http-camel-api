@@ -1,4 +1,4 @@
-package br.com.senior.novasoft.http.camel.entities;
+package br.com.senior.novasoft.http.camel.entities.login;
 
 import org.apache.camel.component.jackson.JacksonDataFormat;
 
@@ -9,6 +9,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
+/**
+ * Input da API de Login
+ * da Novasoft
+ *
+ * @author leonardo.cardoso
+ * @author lucas.nunes
+ */
 @RegisterForReflection(serialization = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.NON_NULL)
@@ -16,13 +23,21 @@ public class LoginInput {
 
     public static final JacksonDataFormat LOGIN_INPUT_FORMAT = new JacksonDataFormat(LoginInput.class);
 
+    /**
+     * Nome do Usuário
+     */
     @JsonProperty("userLogin")
     public String userLogin;
 
+    /**
+     * Senha do Usuário
+     */
     @JsonProperty("password")
     public String password;
 
+    /**
+     * Nome da Conexão
+     */
     @JsonProperty("connectionName")
     public String connectionName;
-
 }

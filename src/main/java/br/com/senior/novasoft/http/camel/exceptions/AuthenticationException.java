@@ -1,4 +1,4 @@
-package br.com.senior.novasoft.http.camel.services;
+package br.com.senior.novasoft.http.camel.exceptions;
 
 public class AuthenticationException extends RuntimeException {
 
