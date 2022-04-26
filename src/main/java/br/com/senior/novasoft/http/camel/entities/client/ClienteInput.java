@@ -6,12 +6,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.camel.component.jackson.JacksonDataFormat;
-
-import java.time.LocalDate;
 
 /**
  * Input da API de
@@ -22,7 +19,7 @@ import java.time.LocalDate;
  * ou não todos devem ser enviados. Para os
  * campos opcionais que não queremos enviar
  * vamos utilizar vazio("") para {@link String}
- * e {@link LocalDate} e 0 para {@link Long}.
+ * e Datas e 0 para {@link Long}.
  *
  * @author lucas.nunes
  */
@@ -211,7 +208,7 @@ public class ClienteInput extends RequestError {
      * Data de admissão
      */
     @JsonProperty("fecIng")
-    private LocalDate fecIng;
+    private String fecIng;
 
     /**
      * Conta contavél
@@ -281,7 +278,7 @@ public class ClienteInput extends RequestError {
      * Aniversário
      */
     @JsonProperty("fecNac")
-    private LocalDate fecNac;
+    private String fecNac;
 
     /**
      * Indicador de status
