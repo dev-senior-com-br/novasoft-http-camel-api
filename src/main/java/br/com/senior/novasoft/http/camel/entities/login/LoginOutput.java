@@ -1,7 +1,9 @@
 package br.com.senior.novasoft.http.camel.entities.login;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.camel.component.jackson.JacksonDataFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -19,7 +21,8 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
  * @author lucas.nunes
  */
 @Data
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @RegisterForReflection(serialization = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.NON_NULL)
