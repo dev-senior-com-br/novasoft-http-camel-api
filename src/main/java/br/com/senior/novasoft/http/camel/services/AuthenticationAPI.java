@@ -8,6 +8,7 @@ import static org.ehcache.config.builders.ExpiryPolicyBuilder.timeToLiveExpirati
 import static org.ehcache.config.units.MemoryUnit.B;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.UUID;
@@ -117,7 +118,7 @@ public class AuthenticationAPI {
 
     public static void addAuthorization(Exchange exchange) {
         LoginOutput loginOutput = (LoginOutput) exchange.getProperty(TOKEN);
-        exchange.getMessage().setHeader("Authorization", "Bearer " + loginOutput.token);
+        exchange.getMessage().setHeader("Authorization", "Bearer " + loginOutput.getToken());
     }
 
     private void tokenFound() {
@@ -176,7 +177,7 @@ public class AuthenticationAPI {
             .to("log:login") //
             .log(HEADERS_LOG) //
             .setExchangePattern(InOut) //
-            .process(login::route) //
+            .process(login::request) //
             .to("log:logged") //
             .log(HEADERS_LOG) //
         ;
@@ -188,7 +189,7 @@ public class AuthenticationAPI {
         Object body = exchange.getMessage().getBody();
         if (body instanceof LoginInput) {
             LoginInput loginInput = (LoginInput) body;
-            key = "user:" + loginInput.userLogin + '$' + loginInput.password;
+            key = "user:" + loginInput.getUserLogin() + '$' + loginInput.getPassword();
         } else {
             throw new AuthenticationException("Unknown login payload: " + body.getClass().getName());
         }
@@ -205,7 +206,7 @@ public class AuthenticationAPI {
 
     public boolean isExpiredToken(Object body) {
         LoginOutput loginOutput = (LoginOutput) body;
-        return now() >= loginOutput.expireTime;
+        return now() >= loginOutput.getExpireTime();
     }
 
     public boolean isUserLogin(Object body) {
@@ -218,13 +219,13 @@ public class AuthenticationAPI {
             throw new AuthenticationException(exception);
         }
         LoginOutput output = (LoginOutput) exchange.getMessage().getBody();
-        if (output.token == null) {
-            throw new AuthenticationException(output.status + ": " + output.title);
+        if (output.getToken() == null) {
+            throw new AuthenticationException(output.getStatus() + ": " + output.getTitle());
         }
         ObjectMapper mapper = new ObjectMapper();
-        OffsetDateTime odt = OffsetDateTime.parse(output.expiration);
+        OffsetDateTime odt = OffsetDateTime.parse(output.getExpiration());
         Date date = new Date(odt.getYear(), odt.getMonthValue(), odt.getDayOfMonth());
-        output.expireTime = now() + ((date.getTime() - TOKEN_EXPIRATION_MARGIN) * 1000);
+        output.setExpireTime(now() + ((date.getTime() - TOKEN_EXPIRATION_MARGIN) * 1000));
         TOKEN_CACHE.put(exchange.getProperty(TOKEN_CACHE_KEY).toString(), output);
         exchange.setProperty(TOKEN, output);
         exchange.getMessage().setBody(output);

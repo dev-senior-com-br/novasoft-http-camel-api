@@ -34,17 +34,17 @@ public class LoginInput {
      * Nome do Usuário
      */
     @JsonProperty("userLogin")
-    public String userLogin;
+    private String userLogin;
 
     /**
      * Senha do Usuário
      */
     @JsonProperty("password")
-    public String password;
+    private String password;
 
     /**
      * Nome da Conexão
      */
     @JsonProperty("connectionName")
-    public String connectionName;
+    private String connectionName;
 }

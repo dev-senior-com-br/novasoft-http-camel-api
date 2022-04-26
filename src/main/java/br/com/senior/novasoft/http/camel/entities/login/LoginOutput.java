@@ -1,5 +1,6 @@
 package br.com.senior.novasoft.http.camel.entities.login;
 
+import br.com.senior.novasoft.http.camel.entities.RequestError;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +27,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 @RegisterForReflection(serialization = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.NON_NULL)
-public class LoginOutput {
+public class LoginOutput extends RequestError {
 
     public static final JacksonDataFormat LOGIN_OUTPUT_FORMAT = new JacksonDataFormat(LoginOutput.class);
 
@@ -35,43 +36,19 @@ public class LoginOutput {
      * Token de autenticação
      */
     @JsonProperty("token")
-    public String token;
+    private String token;
 
     /**
      * Data e hora de
      * expiração do Token
      */
     @JsonProperty("expiration")
-    public String expiration;
+    private String expiration;
 
     /**
-     * NÃO DOCUMENTADO
+     * Tempo de expiração
+     * em milisegundos
      */
     @JsonProperty("expireTime")
-    public Long expireTime;
-
-    // Error response
-    /**
-     * Tipo do Erro
-     */
-    @JsonProperty("type")
-    public String type;
-
-    /**
-     * Nome do Erro
-     */
-    @JsonProperty("title")
-    public String title;
-
-    /**
-     * Status da Requisição
-     */
-    @JsonProperty("status")
-    public String status;
-
-    /**
-     * Id do trace de erro
-     */
-    @JsonProperty("traceId")
-    public String traceId;
+    private Long expireTime;
 }

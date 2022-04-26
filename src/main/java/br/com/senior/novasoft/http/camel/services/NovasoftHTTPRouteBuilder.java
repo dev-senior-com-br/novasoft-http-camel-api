@@ -73,7 +73,7 @@ public class NovasoftHTTPRouteBuilder {
         return this;
     }
 
-    public void route(Exchange exchange) {
+    public void request(Exchange exchange) {
         PropertiesComponent properties = exchange.getContext().getPropertiesComponent();
         String route = url;
 
