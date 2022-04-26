@@ -133,7 +133,7 @@ public class ClienteInput extends RequestError {
      * deve estar entre 1 e 3
      */
     @JsonProperty("formEnt")
-    private String formEnt;
+    private Long formEnt;
 
     /**
      * Contato Cliente
@@ -146,7 +146,7 @@ public class ClienteInput extends RequestError {
      * deve estar entre 1 e 3
      */
     @JsonProperty("nacCli")
-    private String nacCli;
+    private Long nacCli;
 
     /**
      * Noite do Cliente
