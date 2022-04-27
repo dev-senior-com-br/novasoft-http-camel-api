@@ -12,9 +12,9 @@ import static org.ehcache.config.builders.CacheManagerBuilder.newCacheManagerBui
 import static org.ehcache.config.builders.ExpiryPolicyBuilder.timeToLiveExpiration;
 import static org.ehcache.config.units.MemoryUnit.B;
 
-public class CrmConstants {
+public class AuthenticationApiConstants {
 
-    private CrmConstants() {
+    private AuthenticationApiConstants() {
     }
 
     public static final String HTTPS = "https";
@@ -29,10 +29,10 @@ public class CrmConstants {
     public static final String DIRECT_TOKEN_FOUND = "direct:impl-token-found-novasoft";
     public static final String DIRECT_TOKEN_NOT_FOUND = "direct:impl-token-not-found-novasoft";
     public static final String DIRECT_LOGIN = "direct:impl-login-novasoft";
+
+    // Token
     public static final String TOKEN_CACHE_KEY = "token-cache-key-novasoft";
     public static final String TOKEN = "token-novasoft";
-
-    //Token
     public static final String TOKEN_CACHE_NAME = "tokenCacheNovasoft";
     /**
      * Tamanho do cache do token em bytes

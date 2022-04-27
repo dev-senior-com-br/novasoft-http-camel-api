@@ -1,7 +1,7 @@
 package br.com.senior.novasoft.http.camel.services;
 
 import br.com.senior.novasoft.http.camel.exceptions.NovasoftHTTPException;
-import br.com.senior.novasoft.http.camel.utils.constants.CrmConstants;
+import br.com.senior.novasoft.http.camel.utils.constants.AuthenticationApiConstants;
 import br.com.senior.novasoft.http.camel.utils.enums.PrimitiveEnums;
 import br.com.senior.novasoft.http.camel.utils.enums.ServiceEnum;
 import br.com.senior.novasoft.http.camel.utils.https.AllowHost;
@@ -70,8 +70,8 @@ public class NovasoftHTTPRoute {
     private void call(String route, String insecureHost, Exchange exchange) {
         HttpComponent httpComponent = exchange.getContext().getComponent("http", HttpComponent.class);
 
-        if (route.startsWith(CrmConstants.HTTPS)) {
-            httpComponent = exchange.getContext().getComponent(CrmConstants.HTTPS, HttpComponent.class);
+        if (route.startsWith(AuthenticationApiConstants.HTTPS)) {
+            httpComponent = exchange.getContext().getComponent(AuthenticationApiConstants.HTTPS, HttpComponent.class);
             if (insecureHost != null)
                 configureInsecureCall(route, insecureHost, httpComponent);
         }
@@ -103,7 +103,7 @@ public class NovasoftHTTPRoute {
                 RegistryBuilder//
                     .<ConnectionSocketFactory>create()//
                     .register(//
-                        CrmConstants.HTTPS,//
+                        AuthenticationApiConstants.HTTPS,//
                         new SSLConnectionSocketFactory(//
                             sslContext,//
                             new AllowHost(//

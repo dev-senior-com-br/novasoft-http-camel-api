@@ -5,20 +5,21 @@ import br.com.senior.novasoft.http.camel.entities.login.LoginOutput;
 import br.com.senior.novasoft.http.camel.exceptions.AuthenticationException;
 import br.com.senior.novasoft.http.camel.utils.enums.PrimitiveEnums;
 import br.com.senior.novasoft.http.camel.utils.enums.ServiceEnum;
-import lombok.*;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.UUID;
 
 import static br.com.senior.novasoft.http.camel.entities.login.LoginInput.LOGIN_INPUT_FORMAT;
-import static br.com.senior.novasoft.http.camel.utils.constants.CrmConstants.*;
+import static br.com.senior.novasoft.http.camel.utils.constants.AuthenticationApiConstants.*;
 import static org.apache.camel.ExchangePattern.InOut;
-import static org.ehcache.config.builders.CacheConfigurationBuilder.newCacheConfigurationBuilder;
 
 @RequiredArgsConstructor
 public class AuthenticationAPI {
@@ -26,38 +27,31 @@ public class AuthenticationAPI {
     @NonNull
     private final RouteBuilder routeBuilder;
     private final UUID id = UUID.randomUUID();
-    private final String route = DIRECT_NOVASOFT_IMPL.concat(id.toString());
-    private final String to = DIRECT_NOVASOFT_IMPL_RESPONSE.concat(id.toString());
-
+    @Getter
+    @Setter
+    private final String directImpl = DIRECT_NOVASOFT_IMPL.concat(id.toString());
+    @Getter
+    @Setter
+    private final String directResponse = DIRECT_NOVASOFT_IMPL_RESPONSE.concat(id.toString());
     @Getter
     @Setter
     private String url;
 
-    public String getRoute() {
-        return route;
-    }
-
-    public String getResponseRoute() {
-        return to;
-    }
-
     public void prepare() {
-        prepare(exchange -> {});
+        prepare(exchange -> {
+        });
     }
 
-    public void prepare(Processor processor) {
+    public void prepare(Processor enrichWithToken) {
         tokenFound();
         tokenNotFound();
         login();
-
         routeBuilder //
-            .from(route) //
+            .from(directImpl) //
             .routeId(AUTHENTICATE) //
             .to("log:authenticate") //
             .log(HEADERS_LOG) //
-
             .process(this::searchToken) //
-
             .choice() // Token found
             .when(//
                 routeBuilder.method(//
@@ -65,30 +59,20 @@ public class AuthenticationAPI {
                     "tokenFound"//
                 )//
             )//
-
             .setExchangePattern(InOut) //
             .to(DIRECT_TOKEN_FOUND) //
-
             .otherwise() // Token not found
-
             .setExchangePattern(InOut) //
             .to(DIRECT_TOKEN_NOT_FOUND) //
-
             .end() // Token found
-
-            .process(processor) //
-            .to(to) //
+            .process(enrichWithToken) //
+            .to(directResponse) //
         ;
     }
 
     public static void addAuthorization(Exchange exchange) {
         LoginOutput loginOutput = (LoginOutput) exchange.getProperty(TOKEN);
-        exchange//
-            .getMessage()//
-            .setHeader(//
-                "Authorization",//
-                "Bearer " + loginOutput.getToken()//
-            );
+        exchange.getMessage().setHeader("Authorization", "Bearer " + loginOutput.getToken());
     }
 
     private void tokenFound() {
@@ -97,21 +81,16 @@ public class AuthenticationAPI {
             .routeId("token-found-novasoft") //
             .to("log:tokenFound") //
             .log(HEADERS_LOG) //
-
             .choice() // Expired token
             .when(routeBuilder.method(this, "isExpiredToken")) //
-
             .to("log:tokenExpired") //
             .log(HEADERS_LOG) //
-
             .setExchangePattern(InOut) //
             .to(DIRECT_TOKEN_NOT_FOUND) //
-
             .to("log:refreshedToken") //
             .log(HEADERS_LOG) //
             .unmarshal(LoginOutput.LOGIN_OUTPUT_FORMAT) //
             .process(this::unmarshallToken) //
-
             .end() // Expired token
         ;
     }
@@ -132,76 +111,75 @@ public class AuthenticationAPI {
     }
 
     private void login() {
-        String urlNovasoft = url != null ? url : null;
-
-        NovasoftHTTPRoute novasoftHTTPRoute = NovasoftHTTPRoute
-            .builder()
-            .url(urlNovasoft)
-            .method("post")
-            .serviceEnum(ServiceEnum.CUENTA)
-            .primitiveEnums(PrimitiveEnums.LOGIN)
-            .build();
-
-        routeBuilder//
-            .from(DIRECT_LOGIN)//
-            .routeId("login-novasoft")//
-            .marshal(LOGIN_INPUT_FORMAT)//
-            .to("log:login")//
-            .log(HEADERS_LOG)//
-            .setExchangePattern(InOut)//
-            .process(novasoftHTTPRoute::request)//
-            .to("log:logged")//
-            .log(HEADERS_LOG)//
+        NovasoftHTTPRoute login = new NovasoftHTTPRoute();
+        if (url != null) {
+            login.setUrl(url);
+        }
+        login.setMethod("post");
+        login.setServiceEnum(ServiceEnum.CUENTA);
+        login.setPrimitiveEnums(PrimitiveEnums.LOGIN);
+        routeBuilder //
+            .from(DIRECT_LOGIN) //
+            .routeId("login-novasoft") //
+            .marshal(LOGIN_INPUT_FORMAT) //
+            .to("log:login") //
+            .log(HEADERS_LOG) //
+            .setExchangePattern(InOut) //
+            .process(login::request) //
+            .to("log:logged") //
+            .log(HEADERS_LOG) //
         ;
     }
 
     private void searchToken(Exchange exchange) {
+        String key = null;
+        LoginOutput loginOutput = null;
         Object body = exchange.getMessage().getBody();
-        if (!(body instanceof LoginInput))
+        if (body instanceof LoginInput) {
+            LoginInput loginInput = (LoginInput) body;
+            key = "user:" + loginInput.getUserLogin() + '$' + loginInput.getPassword();
+        } else {
             throw new AuthenticationException("Unknown login payload: " + body.getClass().getName());
-
-        LoginInput loginInput = (LoginInput) body;
-        String key =
-            "user:"
-            .concat(loginInput.getUserLogin())
-            .concat("$")
-            .concat(loginInput.getPassword());
+        }
         exchange.setProperty(TOKEN_CACHE_KEY, key);
-        LoginOutput loginOutput = TOKEN_CACHE.get(key);
-
-        if (loginOutput != null)
+        loginOutput = TOKEN_CACHE.get(key);
+        if (loginOutput != null) {
             exchange.getMessage().setBody(loginOutput);
+        }
+    }
+
+    public boolean tokenFound(Object body) {
+        return body instanceof LoginOutput;
+    }
+
+    public boolean isExpiredToken(Object body) {
+        LoginOutput loginOutput = (LoginOutput) body;
+        return now() >= loginOutput.getExpireTime();
+    }
+
+    public boolean isUserLogin(Object body) {
+        return body instanceof LoginInput;
     }
 
     private void unmarshallToken(Exchange exchange) {
-        validateExchangeLogin(exchange);
+        Exception exception = exchange.getException();
+        if (exception != null) {
+            throw new AuthenticationException(exception);
+        }
         LoginOutput output = (LoginOutput) exchange.getMessage().getBody();
+        if (output.getToken() == null) {
+            throw new AuthenticationException(output.getStatus() + ": " + output.getTitle());
+        }
         OffsetDateTime odt = OffsetDateTime.parse(output.getExpiration());
         Date date = new Date(odt.getYear(), odt.getMonthValue(), odt.getDayOfMonth());
-        Long expireTime = now() + ((date.getTime() - TOKEN_EXPIRATION_MARGIN) * 1000);
-        output.setExpireTime(expireTime);
+        output.setExpireTime(now() + ((date.getTime() - TOKEN_EXPIRATION_MARGIN) * 1000));
         TOKEN_CACHE.put(exchange.getProperty(TOKEN_CACHE_KEY).toString(), output);
         exchange.setProperty(TOKEN, output);
         exchange.getMessage().setBody(output);
         addAuthorization(exchange);
     }
 
-    private Long now() {
+    private long now() {
         return new Date().getTime();
-    }
-
-    private void validateExchangeLogin(Exchange exchange) {
-        LoginOutput output = (LoginOutput) exchange.getMessage().getBody();
-        if (exchange.getException() != null) {
-            throw new AuthenticationException(exchange.getException());
-        } else if(output.getToken() == null) {
-            throw new AuthenticationException(//
-                output//
-                    .getStatus()//
-                    .toString()//
-                    .concat(": ")//
-                    .concat(output.getTitle())//
-            );
-        }
     }
 }
