@@ -17,11 +17,14 @@ import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.http.HttpClientConfigurer;
 import org.apache.camel.component.http.HttpComponent;
 import org.apache.camel.spi.PropertiesComponent;
+import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 
@@ -95,28 +98,14 @@ public class NovasoftHTTPRoute {
 
     private void configureInsecureCall(String route, String insecureHost, HttpComponent httpComponent) {
         log.warn("Routing to insecure http call {}", route);
-        SSLContext sslContext = getSSLContext();
-        httpComponent.setHttpClientConfigurer(//
-            getEndpointClientConfigurer(//
-                sslContext//
-            )//
-        );
-        httpComponent.setClientConnectionManager(//
-            new BasicHttpClientConnectionManager(//
-                RegistryBuilder//
-                    .<ConnectionSocketFactory>create()//
-                    .register(//
-                        AuthenticationApiConstants.HTTPS,//
-                        new SSLConnectionSocketFactory(//
-                            sslContext,//
-                            new AllowHost(//
-                                insecureHost//
-                            )//
-                        )//
-                    )//
-                    .build()//
-            )//
-        );
+        SSLContext sslctxt = getSSLContext();
+        HttpClientConfigurer httpClientConfig = getEndpointClientConfigurer(sslctxt);
+        httpComponent.setHttpClientConfigurer(httpClientConfig);
+        HostnameVerifier hnv = new AllowHost(insecureHost);
+        SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslctxt, hnv);
+        Registry<ConnectionSocketFactory> lookup = RegistryBuilder.<ConnectionSocketFactory>create().register(AuthenticationApiConstants.HTTPS, sslSocketFactory).build();
+        HttpClientConnectionManager connManager = new BasicHttpClientConnectionManager(lookup);
+        httpComponent.setClientConnectionManager(connManager);
     }
 
     private SSLContext getSSLContext() {
