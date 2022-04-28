@@ -5,6 +5,8 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 
+import java.util.Map;
+
 @Slf4j
 public class ForwardProcessor implements Processor {
 
@@ -15,23 +17,17 @@ public class ForwardProcessor implements Processor {
     }
 
     @Override
-    public void process(Exchange exchange) {
+    public void process(Exchange exchange) throws Exception {
         prepare(source, exchange);
     }
 
-    private void prepare(Exchange source, Exchange exchange) {
-        Message sourceMessage = source.getMessage();
-        Message message = exchange.getMessage();
+    private void prepare(Exchange src, Exchange dest) {
+        Message sourceMessage = src.getMessage();
+        Message message = dest.getMessage();
         message.setBody(sourceMessage.getBody());
-        sourceMessage
-            .getHeaders()
-            .entrySet()
-            .forEach(stringObjectEntry -> {//
-                message.setHeader(//
-                    stringObjectEntry.getKey(),//
-                    stringObjectEntry.getValue()//
-                );
-            });
+        for (Map.Entry<String, Object> entry : sourceMessage.getHeaders().entrySet()) {
+            message.setHeader(entry.getKey(), entry.getValue());
+        }
         log.info("Body {}", message.getBody());
         log.info("Headers {}", message.getHeaders());
     }
