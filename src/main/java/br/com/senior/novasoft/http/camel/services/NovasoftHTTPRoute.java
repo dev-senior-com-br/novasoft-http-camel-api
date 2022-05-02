@@ -96,11 +96,11 @@ public class NovasoftHTTPRoute {
 
     private void configureInsecureCall(String route, String insecureHost, HttpComponent httpComponent) {
         log.warn("Routing to insecure http call {}", route);
-        SSLContext sslctxt = getSSLContext();
-        HttpClientConfigurer httpClientConfig = getEndpointClientConfigurer(sslctxt);
+        SSLContext sslContext = getSSLContext();
+        HttpClientConfigurer httpClientConfig = getEndpointClientConfigurer(sslContext);
         httpComponent.setHttpClientConfigurer(httpClientConfig);
         HostnameVerifier hnv = new AllowHost(insecureHost);
-        SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslctxt, hnv);
+        SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext, hnv);
         Registry<ConnectionSocketFactory> lookup = RegistryBuilder.<ConnectionSocketFactory>create().register(AuthenticationApiConstants.HTTPS, sslSocketFactory).build();
         HttpClientConnectionManager connManager = new BasicHttpClientConnectionManager(lookup);
         httpComponent.setClientConnectionManager(connManager);

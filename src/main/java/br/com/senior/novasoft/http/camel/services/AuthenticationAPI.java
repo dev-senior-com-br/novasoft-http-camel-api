@@ -168,7 +168,7 @@ public class AuthenticationAPI {
         }
         LoginOutput output = (LoginOutput) exchange.getMessage().getBody();
         if (output.getToken() == null) {
-            throw new AuthenticationException(output.getStatus() + ": " + output.getTitle());
+            //throw new AuthenticationException(output.getStatus() + ": " + output.getTitle());
         }
         OffsetDateTime odt = OffsetDateTime.parse(output.getExpiration());
         Date date = new Date(odt.getYear(), odt.getMonthValue(), odt.getDayOfMonth());
