@@ -27,7 +27,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 @RegisterForReflection(serialization = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.NON_NULL)
-public class LoginOutput extends RequestError {
+public class LoginOutput {
 
     public static final JacksonDataFormat LOGIN_OUTPUT_FORMAT = new JacksonDataFormat(LoginOutput.class);
 

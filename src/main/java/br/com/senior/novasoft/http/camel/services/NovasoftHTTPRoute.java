@@ -86,12 +86,10 @@ public class NovasoftHTTPRoute {
             log.info("Routed to {}", route);
             Exception exception = request.getException();
             if (exception != null) {
-                log.error("ERRO DE EXCEPTION NA REQUEST");
                 throw new NovasoftHTTPException(exception);
             }
             forwardProcessor.reverse(request);
         } catch (Exception exception) {
-            log.error("ALGUMA COISA NO TRY");
             throw new NovasoftHTTPException(exception);
         }
     }
@@ -115,7 +113,6 @@ public class NovasoftHTTPRoute {
             sslContext.init(null, trustAllCerts, null);
             return sslContext;
         } catch (Exception exception) {
-            log.error("ERROR IN SSLCONTEXT");
             throw new NovasoftHTTPException(exception);
         }
     }
