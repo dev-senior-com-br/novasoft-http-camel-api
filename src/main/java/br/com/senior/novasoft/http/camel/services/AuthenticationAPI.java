@@ -111,7 +111,7 @@ public class AuthenticationAPI {
     }
 
     private void login() {
-        NovasoftHTTPRoute login = new NovasoftHTTPRoute();
+        NovasoftHTTPRouteBuilder login = new NovasoftHTTPRouteBuilder();
         if (url != null) {
             login.setUrl(url);
         }

@@ -33,7 +33,7 @@ import javax.net.ssl.TrustManager;
 @NoArgsConstructor
 @Data
 @Slf4j
-public class NovasoftHTTPRoute {
+public class NovasoftHTTPRouteBuilder {
 
     private String url = "";
     private String allowedInsecureHost = "{{novasoft.allowedinsecurehost}}";
