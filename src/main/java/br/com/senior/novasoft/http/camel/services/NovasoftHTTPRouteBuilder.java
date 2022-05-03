@@ -61,9 +61,7 @@ public class NovasoftHTTPRouteBuilder {
         call(//
             route,//
             resolve(//
-                exchange//
-                    .getContext()//
-                    .getPropertiesComponent(),//
+                exchange.getContext().getPropertiesComponent(),//
                 allowedInsecureHost//
             ),//
             exchange//
