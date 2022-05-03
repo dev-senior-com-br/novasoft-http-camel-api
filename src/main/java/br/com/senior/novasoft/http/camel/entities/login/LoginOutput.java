@@ -26,19 +26,19 @@ public class LoginOutput {
      * Token de autenticação
      */
     @JsonProperty("token")
-    String token;
+    public String token;
 
     /**
      * Data e hora de
      * expiração do Token
      */
     @JsonProperty("expiration")
-    String expiration;
+    public String expiration;
 
     /**
      * Tempo de expiração
      * em milisegundos
      */
     @JsonProperty("expireTime")
-    Long expireTime;
+    public Long expireTime;
 }

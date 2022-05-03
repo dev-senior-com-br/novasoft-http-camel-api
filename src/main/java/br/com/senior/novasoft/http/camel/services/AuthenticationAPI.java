@@ -72,7 +72,7 @@ public class AuthenticationAPI {
 
     public static void addAuthorization(Exchange exchange) {
         LoginOutput loginOutput = (LoginOutput) exchange.getProperty(TOKEN);
-        exchange.getMessage().setHeader("Authorization", "Bearer " + loginOutput.getToken());
+        exchange.getMessage().setHeader("Authorization", "Bearer " + loginOutput.token);
     }
 
     private void tokenFound() {
@@ -154,7 +154,7 @@ public class AuthenticationAPI {
 
     public boolean isExpiredToken(Object body) {
         LoginOutput loginOutput = (LoginOutput) body;
-        return now() >= loginOutput.getExpireTime();
+        return now() >= loginOutput.expireTime;
     }
 
     public boolean isUserLogin(Object body) {
@@ -167,12 +167,12 @@ public class AuthenticationAPI {
             throw new AuthenticationException(exception);
         }
         LoginOutput output = (LoginOutput) exchange.getMessage().getBody();
-        if (output.getToken() == null) {
+        if (output.token == null) {
             //throw new AuthenticationException(output.getStatus() + ": " + output.getTitle());
         }
-        OffsetDateTime odt = OffsetDateTime.parse(output.getExpiration());
+        OffsetDateTime odt = OffsetDateTime.parse(output.expiration);
         Date date = new Date(odt.getYear(), odt.getMonthValue(), odt.getDayOfMonth());
-        output.setExpireTime(now() + ((date.getTime() - TOKEN_EXPIRATION_MARGIN) * 1000));
+        output.expireTime = now() + ((date.getTime() - TOKEN_EXPIRATION_MARGIN) * 1000);
         TOKEN_CACHE.put(exchange.getProperty(TOKEN_CACHE_KEY).toString(), output);
         exchange.setProperty(TOKEN, output);
         exchange.getMessage().setBody(output);
