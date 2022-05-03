@@ -82,6 +82,7 @@ public class NovasoftHTTPRouteBuilder {
             ForwardProcessor forwardProcessor = new ForwardProcessor(exchange);
             Exchange request = producerTemplate.request(httpComponent.createEndpoint(route), forwardProcessor);
             log.info("Routed to {}", route);
+            log.info("Body: {}", request.getMessage().getBody().toString());
             Exception exception = request.getException();
             if (exception != null) {
                 throw new NovasoftHTTPException(exception);

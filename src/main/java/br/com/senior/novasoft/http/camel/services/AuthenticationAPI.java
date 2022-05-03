@@ -27,12 +27,15 @@ public class AuthenticationAPI {
     @NonNull
     private final RouteBuilder routeBuilder;
     private final UUID id = UUID.randomUUID();
+
     @Getter
     @Setter
     private final String directImpl = DIRECT_NOVASOFT_IMPL.concat(id.toString());
+
     @Getter
     @Setter
     private final String directResponse = DIRECT_NOVASOFT_IMPL_RESPONSE.concat(id.toString());
+
     @Getter
     @Setter
     private String url;
