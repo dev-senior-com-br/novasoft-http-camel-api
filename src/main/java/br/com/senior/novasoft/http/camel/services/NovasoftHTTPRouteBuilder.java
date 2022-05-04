@@ -57,6 +57,7 @@ public class NovasoftHTTPRouteBuilder {
         Message message = exchange.getMessage();
         message.setHeader("Content-Type", "application/json");
         message.setHeader(Exchange.HTTP_METHOD, method);
+        exchange.setMessage(message);
 
         call(//
             route,//
@@ -71,6 +72,8 @@ public class NovasoftHTTPRouteBuilder {
     private void call(String route, String insecureHost, Exchange exchange) {
         HttpComponent httpComponent = exchange.getContext().getComponent("http", HttpComponent.class);
 
+        log.info("Body linha 75: {}", exchange.getMessage().getBody().toString());
+
         if (route.startsWith(AuthenticationApiConstants.HTTPS)) {
             httpComponent = exchange.getContext().getComponent(AuthenticationApiConstants.HTTPS, HttpComponent.class);
             if (insecureHost != null)
@@ -79,10 +82,11 @@ public class NovasoftHTTPRouteBuilder {
         exchange.getIn().setHeader(Exchange.HTTP_URI, route);
         try (ProducerTemplate producerTemplate = exchange.getContext().createProducerTemplate()) {
             log.info("Routing to {}", route);
+            System.out.println("Body Antes: {}" + exchange.getMessage().getBody().toString());
             ForwardProcessor forwardProcessor = new ForwardProcessor(exchange);
             Exchange request = producerTemplate.request(httpComponent.createEndpoint(route), forwardProcessor);
             log.info("Routed to {}", route);
-            log.info("Body: {}", request.getMessage().getBody().toString());
+            log.info("Body linha 89: {}", request.getMessage().getBody().toString());
             Exception exception = request.getException();
             if (exception != null) {
                 throw new NovasoftHTTPException(exception);
