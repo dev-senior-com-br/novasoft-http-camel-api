@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
@@ -22,6 +23,7 @@ import static br.com.senior.novasoft.http.camel.utils.constants.AuthenticationAp
 import static org.apache.camel.ExchangePattern.InOut;
 
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationAPI {
 
     @NonNull
@@ -118,9 +120,13 @@ public class AuthenticationAPI {
         if (url != null) {
             login.setUrl(url);
         }
+
+        log.info("URL Novasoft: " + login.getUrl());
+
         login.setMethod("post");
         login.setServiceEnum(ServiceEnum.CUENTA);
         login.setPrimitiveEnums(PrimitiveEnums.LOGIN);
+
         routeBuilder //
             .from(DIRECT_LOGIN) //
             .routeId("login-novasoft") //
