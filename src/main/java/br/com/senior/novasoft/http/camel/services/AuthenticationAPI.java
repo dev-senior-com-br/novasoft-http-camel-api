@@ -117,18 +117,13 @@ public class AuthenticationAPI {
 
     private void login() {
         NovasoftHTTPRouteBuilder login = new NovasoftHTTPRouteBuilder();
-        if (url != null) {
-            login.setUrl(url);
-        }
-
-        log.info("URL Novasoft: " + login.getUrl());
-
         login.setMethod("post");
         login.setServiceEnum(ServiceEnum.CUENTA);
         login.setPrimitiveEnums(PrimitiveEnums.LOGIN);
 
         routeBuilder //
             .from(DIRECT_LOGIN) //
+            .process(exchange -> login.setUrl(url))
             .routeId("login-novasoft") //
             .marshal(LOGIN_INPUT_FORMAT) //
             .to("log:login") //

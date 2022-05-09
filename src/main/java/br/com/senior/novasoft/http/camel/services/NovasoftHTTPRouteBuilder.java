@@ -44,6 +44,8 @@ public class NovasoftHTTPRouteBuilder {
     public void request(Exchange exchange) {
         String route = url;
 
+        log.info("URL initial[]: " + route);
+
         if (route == null)
             throw new NovasoftHTTPException("URL property not configured");
 
@@ -53,6 +55,8 @@ public class NovasoftHTTPRouteBuilder {
             .concat(serviceEnum.getPath())
             .concat("/")
             .concat(primitiveEnums.getPath());
+
+        log.info("URL final[]: " + route);
 
         Message message = exchange.getMessage();
         message.setHeader("Content-Type", "application/json");
