@@ -31,7 +31,7 @@ import org.apache.camel.component.jackson.JacksonDataFormat;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ClienteInput extends RequestError {
 
-    public static final JacksonDataFormat CLIENTE_INPUT_FORMAT = new JacksonDataFormat(ClienteInput.class);
+    public static final JacksonDataFormat JACKSON_DATA_FORMAT = new JacksonDataFormat(ClienteInput.class);
 
     //Campos obrigatórios
     /**

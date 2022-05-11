@@ -27,7 +27,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ClienteOutput extends RequestError {
 
-    public static final JacksonDataFormat CLIENTE_OUTPUT_FORMAT = new JacksonDataFormat(ClienteOutput.class);
+    public static final JacksonDataFormat JACKSON_DATA_FORMAT = new JacksonDataFormat(ClienteOutput.class);
 
     @JsonProperty("")
     private List<ClienteErrorOutput> clienteOutputErrors;

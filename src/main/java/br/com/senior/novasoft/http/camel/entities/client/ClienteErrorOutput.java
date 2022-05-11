@@ -27,7 +27,7 @@ import org.apache.camel.component.jackson.JacksonDataFormat;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ClienteErrorOutput extends RequestError {
 
-    public static final JacksonDataFormat CLIENTE_ERROR_OUTPUT_FORMAT = new JacksonDataFormat(ClienteErrorOutput.class);
+    public static final JacksonDataFormat JACKSON_DATA_FORMAT = new JacksonDataFormat(ClienteErrorOutput.class);
 
     /**
      * Id do cliente
