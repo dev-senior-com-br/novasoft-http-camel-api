@@ -82,10 +82,11 @@ public class NovasoftHTTPRouteBuilder {
         }
         exchange.getIn().setHeader(Exchange.HTTP_URI, route);
         try (ProducerTemplate producerTemplate = exchange.getContext().createProducerTemplate()) {
-            log.info("Routing to {}", route);
+            System.out.println("Depois do template: " + exchange.getMessage().getBody());
+            log.info("Routing to: {}", route);
             ForwardProcessor forwardProcessor = new ForwardProcessor(exchange);
             Exchange request = producerTemplate.request(httpComponent.createEndpoint(route), forwardProcessor);
-            log.info("Routed to {}", route);
+            log.info("Routed to: {}", route);
             Exception exception = request.getException();
             if (exception != null) {
                 log.error(exception.getMessage());

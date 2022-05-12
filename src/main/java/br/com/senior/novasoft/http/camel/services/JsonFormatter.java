@@ -51,8 +51,8 @@ public class JsonFormatter {
     public static void formatterArray(Exchange exchange) {
         try {
             List<ClienteErrorOutput> clienteErrorOutputs = new ArrayList<>();
-
             List<Map<String, Object>> mapArray = (List<Map<String, Object>>) exchange.getMessage().getBody();
+
             mapArray.forEach(map -> {
                 JsonObject jsonObject = new JsonObject(map);
                 log.info("Json Formatter Array: {}", jsonObject.toString());
