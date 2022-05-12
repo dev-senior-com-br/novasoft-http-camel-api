@@ -81,23 +81,16 @@ public class NovasoftHTTPRouteBuilder {
                 configureInsecureCall(route, insecureHost, httpComponent);
         }
         exchange.getIn().setHeader(Exchange.HTTP_URI, route);
-        System.out.println(1);
         try (ProducerTemplate producerTemplate = exchange.getContext().createProducerTemplate()) {
-            System.out.println(2);
             log.info("Routing to {}", route);
             ForwardProcessor forwardProcessor = new ForwardProcessor(exchange);
-            System.out.println(3);
             Exchange request = producerTemplate.request(httpComponent.createEndpoint(route), forwardProcessor);
-            System.out.println(4);
             log.info("Routed to {}", route);
             Exception exception = request.getException();
-            System.out.println(5);
             if (exception != null) {
                 log.error(exception.getMessage());
             }
-            System.out.println(6);
             forwardProcessor.reverse(request);
-            System.out.println(7);
         } catch (Exception exception) {
             log.error("Error catch: {}", exception.getMessage());
         }
