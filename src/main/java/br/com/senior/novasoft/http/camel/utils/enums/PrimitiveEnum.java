@@ -7,7 +7,7 @@ package br.com.senior.novasoft.http.camel.utils.enums;
  *
  * @author lucas.nunes
  */
-public enum PrimitiveEnums {
+public enum PrimitiveEnum {
 
     LOGIN("login"),//
     ACTIVIDADES("Actividades"),//
@@ -40,7 +40,7 @@ public enum PrimitiveEnums {
 
     private String path;
 
-    PrimitiveEnums(String path) {
+    PrimitiveEnum(String path) {
         this.path = path;
     }
 

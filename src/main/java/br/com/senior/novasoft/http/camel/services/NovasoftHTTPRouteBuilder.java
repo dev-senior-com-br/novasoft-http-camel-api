@@ -2,7 +2,9 @@ package br.com.senior.novasoft.http.camel.services;
 
 import br.com.senior.novasoft.http.camel.exceptions.NovasoftHTTPException;
 import br.com.senior.novasoft.http.camel.utils.constants.AuthenticationApiConstants;
-import br.com.senior.novasoft.http.camel.utils.enums.PrimitiveEnums;
+import br.com.senior.novasoft.http.camel.utils.enums.MethodEnum;
+import br.com.senior.novasoft.http.camel.utils.enums.PrimitiveComplementEnum;
+import br.com.senior.novasoft.http.camel.utils.enums.PrimitiveEnum;
 import br.com.senior.novasoft.http.camel.utils.enums.ServiceEnum;
 import br.com.senior.novasoft.http.camel.utils.https.AllowHost;
 import br.com.senior.novasoft.http.camel.utils.https.TrustALLManager;
@@ -37,9 +39,16 @@ public class NovasoftHTTPRouteBuilder {
 
     private String url = "";
     private String allowedInsecureHost = "{{novasoft.allowedinsecurehost}}";
-    private String method;
+    private MethodEnum method;
     private ServiceEnum serviceEnum;
-    private PrimitiveEnums primitiveEnums;
+    private PrimitiveEnum primitiveEnum;
+
+    private String complementPrimitive = "";
+
+    public void setComplementPrimitive(PrimitiveComplementEnum primitiveComplement, String complement)
+    {
+        complementPrimitive = primitiveComplement.getPath() + complement;
+    }
 
     public void request(Exchange exchange) {
         String route = url;
@@ -54,14 +63,15 @@ public class NovasoftHTTPRouteBuilder {
         route = route.concat("/")
             .concat(serviceEnum.getPath())
             .concat("/")
-            .concat(primitiveEnums.getPath())
+            .concat(primitiveEnum.getPath())
+            .concat(complementPrimitive)
             .concat("?throwExceptionOnFailure=false");
 
         log.info("URL final: {}", route);
 
         Message message = exchange.getMessage();
         message.setHeader("Content-Type", "application/json");
-        message.setHeader(Exchange.HTTP_METHOD, method);
+        message.setHeader(Exchange.HTTP_METHOD, method.getPath());
         exchange.setMessage(message);
 
         call(//

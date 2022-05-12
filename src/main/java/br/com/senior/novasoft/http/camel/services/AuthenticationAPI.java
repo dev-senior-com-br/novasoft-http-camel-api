@@ -3,7 +3,8 @@ package br.com.senior.novasoft.http.camel.services;
 import br.com.senior.novasoft.http.camel.entities.login.LoginInput;
 import br.com.senior.novasoft.http.camel.entities.login.LoginOutput;
 import br.com.senior.novasoft.http.camel.exceptions.AuthenticationException;
-import br.com.senior.novasoft.http.camel.utils.enums.PrimitiveEnums;
+import br.com.senior.novasoft.http.camel.utils.enums.MethodEnum;
+import br.com.senior.novasoft.http.camel.utils.enums.PrimitiveEnum;
 import br.com.senior.novasoft.http.camel.utils.enums.ServiceEnum;
 import lombok.Getter;
 import lombok.NonNull;
@@ -117,9 +118,9 @@ public class AuthenticationAPI {
 
     private void login() {
         NovasoftHTTPRouteBuilder login = new NovasoftHTTPRouteBuilder();
-        login.setMethod("post");
+        login.setMethod(MethodEnum.POST);
         login.setServiceEnum(ServiceEnum.CUENTA);
-        login.setPrimitiveEnums(PrimitiveEnums.LOGIN);
+        login.setPrimitiveEnum(PrimitiveEnum.LOGIN);
 
         routeBuilder //
             .from(DIRECT_LOGIN) //
