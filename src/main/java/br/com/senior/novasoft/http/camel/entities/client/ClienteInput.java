@@ -278,7 +278,7 @@ public class ClienteInput extends RequestError {
      * Aniversário
      */
     @JsonProperty("fecNac")
-    private String fecNac = "";
+    private String fecNac;
 
     /**
      * Indicador de status
