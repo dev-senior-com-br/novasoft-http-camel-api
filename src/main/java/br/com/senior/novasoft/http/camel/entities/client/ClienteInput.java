@@ -51,7 +51,7 @@ public class ClienteInput extends RequestError {
      * Apelido 1
      */
     @JsonProperty("ap1Cli")
-    private String ap1Cli = "0";
+    private String ap1Cli = "-";
 
     /**
      * Código da Cidade
