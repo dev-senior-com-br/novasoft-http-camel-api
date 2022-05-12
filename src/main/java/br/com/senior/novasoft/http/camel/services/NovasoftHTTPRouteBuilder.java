@@ -87,12 +87,12 @@ public class NovasoftHTTPRouteBuilder {
             Exchange request = producerTemplate.request(httpComponent.createEndpoint(route), forwardProcessor);
             log.info("Routed to {}", route);
             Exception exception = request.getException();
-            System.out.println("Que porra é essa? " + request.getMessage().getBody());
+            System.out.println("Que porra é essa? " + request.getMessage().getBody().toString());
             if (exception != null) {
-               log.error(exception.getMessage());
+                log.error(exception.getMessage());
             }
             forwardProcessor.reverse(request);
-            System.out.println("Que porra é essa 2? " + request.getMessage());
+            System.out.println("Que porra é essa 2? " + request.getMessage().getBody().toString());
         } catch (Exception exception) {
             throw new NovasoftHTTPException(exception);
         }
