@@ -29,9 +29,9 @@ import org.apache.camel.component.jackson.JacksonDataFormat;
 @RegisterForReflection(serialization = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ClienteInput extends RequestError {
+public class Cliente extends RequestError {
 
-    public static final JacksonDataFormat JACKSON_DATA_FORMAT = new JacksonDataFormat(ClienteInput.class);
+    public static final JacksonDataFormat JACKSON_DATA_FORMAT = new JacksonDataFormat(Cliente.class);
 
     //Campos obrigatórios
     /**

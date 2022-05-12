@@ -1,13 +1,11 @@
 package br.com.senior.novasoft.http.camel.services;
 
-import br.com.senior.novasoft.http.camel.entities.client.ClienteErrorOutput;
-import br.com.senior.novasoft.http.camel.entities.client.ClienteOutput;
+import br.com.senior.novasoft.http.camel.entities.client.Cliente;
 import io.vertx.core.json.JsonArray;
-import io.vertx.core.json.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +16,7 @@ import java.util.Map;
  * @author lucas.nunes
  */
 @Slf4j
+@Service
 public class JsonFormatter {
 
     private JsonFormatter() {
@@ -50,23 +49,23 @@ public class JsonFormatter {
      */
     public static void formatterArray(Exchange exchange) {
         try {
-            List<ClienteErrorOutput> clienteErrorOutputs = new ArrayList<>();
-            List<Map<String, Object>> mapArray = (List<Map<String, Object>>) exchange.getMessage().getBody();
+            Map<String, Object> mapBody = (Map<String, Object>) exchange.getMessage().getBody();
+            log.info("JsonFormatter Array: {}", mapBody.toString());
 
-            mapArray.forEach(map -> {
-                JsonObject jsonObject = new JsonObject(map);
-                log.info("Json Formatter Array: {}", jsonObject.toString());
+            String type = (String) mapBody.get("type");
+            String title = (String) mapBody.get("title");
+            Integer status = (Integer) mapBody.get("status");
+            String traceId = (String) mapBody.get("traceId");
+            List<Object> errors = (List<Object>) mapBody.get("errors");
 
-                clienteErrorOutputs.add(
-                    new ClienteErrorOutput(
-                        jsonObject.getString("cliente"),
-                        jsonObject.getString("mensaje"),
-                        jsonObject.getBoolean("indError")
-                    )
-                );
-            });
+            Cliente cliente = new Cliente();
+            cliente.setType(type);
+            cliente.setTitle(title);
+            cliente.setStatus(status);
+            cliente.setTraceId(traceId);
+            cliente.setErrors(errors);
 
-            exchange.getMessage().setBody(new ClienteOutput(clienteErrorOutputs));
+            exchange.getMessage().setBody(cliente);
         } catch (Exception exception) {
             log.error("Error JsonFormatter Array: {}", exception);
         }
