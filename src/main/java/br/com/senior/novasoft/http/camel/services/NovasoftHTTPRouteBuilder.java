@@ -85,15 +85,15 @@ public class NovasoftHTTPRouteBuilder {
             log.info("Routing to {}", route);
             ForwardProcessor forwardProcessor = new ForwardProcessor(exchange);
             Exchange request = producerTemplate.request(httpComponent.createEndpoint(route), forwardProcessor);
+            log.info("Out: {}", request.getOut().getBody());
             log.info("Routed to {}", route);
             Exception exception = request.getException();
-            log.info("Antes do forwardProcessor: {}", request.getMessage().getBody().toString());
             if (exception != null) {
                 log.error(exception.getMessage());
             }
             forwardProcessor.reverse(request);
         } catch (Exception exception) {
-            throw new NovasoftHTTPException(exception);
+            log.error("Error catch: {}", exception.getMessage());
         }
     }
 
