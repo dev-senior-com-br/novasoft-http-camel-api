@@ -51,7 +51,7 @@ public class ClienteInput extends RequestError {
      * Apelido 1
      */
     @JsonProperty("ap1Cli")
-    private String ap1Cli = "";
+    private String ap1Cli = "0";
 
     /**
      * Código da Cidade
@@ -93,7 +93,7 @@ public class ClienteInput extends RequestError {
      * Código do tributo
      */
     @JsonProperty("codTrib")
-    private String codTrib = "";
+    private String codTrib = "0";
 
     /**
      * Conta contábil IFRS
@@ -136,7 +136,7 @@ public class ClienteInput extends RequestError {
      * Contato Cliente
      */
     @JsonProperty("jefCom")
-    private String jefCom = "";
+    private String jefCom = "0";
 
     /**
      * Domicilío,
@@ -173,7 +173,7 @@ public class ClienteInput extends RequestError {
      * Telefone 2 do Cliente
      */
     @JsonProperty("te2Cli")
-    private String te2Cli = "";
+    private String te2Cli;
 
     /**
      * Tipo cliente,
