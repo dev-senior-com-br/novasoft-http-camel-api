@@ -86,7 +86,17 @@ public class NovasoftHTTPRouteBuilder {
             ForwardProcessor forwardProcessor = new ForwardProcessor(exchange);
             Exchange request = producerTemplate.request(httpComponent.createEndpoint(route), forwardProcessor);
             Message message = request.getOut();
-            System.out.println("RETORNO AQUI: " + message.getBody().toString());
+            if (message != null) {
+                Object object = message.getBody();
+                if (object != null) {
+                    System.out.println("RETORNO AQUI: " + message.getBody().toString());
+                } else {
+                    System.out.println("Body out está NULL");
+                }
+            } else {
+                System.out.println("Message out está NULL");
+            }
+
             log.info("Routed to {}", route);
             Exception exception = request.getException();
             System.out.println("Que porra é essa? " + request.getMessage().getBody().toString());
@@ -95,7 +105,16 @@ public class NovasoftHTTPRouteBuilder {
             }
             forwardProcessor.reverse(request);
             System.out.println("Que porra é essa 2? " + request.getMessage().getBody().toString());
-            System.out.println("RETORNO AQUI EM BAIXO: " + message.getBody().toString());
+            if (message != null) {
+                Object object = message.getBody();
+                if (object != null) {
+                    System.out.println("RETORNO AQUI EM BAIXO: " + message.getBody().toString());
+                } else {
+                    System.out.println("Body out está NULL baixo");
+                }
+            } else {
+                System.out.println("Message out está NULL baixo");
+            }
         } catch (Exception exception) {
             throw new NovasoftHTTPException(exception);
         }
