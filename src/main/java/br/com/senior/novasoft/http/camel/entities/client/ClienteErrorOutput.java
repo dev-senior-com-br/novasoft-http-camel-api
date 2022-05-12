@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.camel.component.jackson.JacksonDataFormat;
@@ -33,17 +32,17 @@ public class ClienteErrorOutput extends RequestError {
      * Id do cliente
      */
     @JsonProperty("cliente")
-    private String cliente;
+    public String cliente;
 
     /**
      * Mensagem do que aconteceu
      */
     @JsonProperty("mensaje")
-    private String mensaje;
+    public String mensaje;
 
     /**
      * É um erro
      */
     @JsonProperty("indError")
-    private Boolean indError;
+    public Boolean indError;
 }

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.camel.component.jackson.JacksonDataFormat;
@@ -23,17 +22,17 @@ public class RequestError {
     public static final JacksonDataFormat REQUEST_ERROR_FORMAT = new JacksonDataFormat(RequestError.class);
 
     @JsonProperty("type")
-    private String type;
+    public String type;
 
     @JsonProperty("title")
-    private String title;
+    public String title;
 
     @JsonProperty("status")
-    private Integer status;
+    public Integer status;
 
     @JsonProperty("traceId")
-    private String traceId;
+    public String traceId;
 
     @JsonProperty("errors")
-    private List<Object> errors;
+    public List<Object> errors;
 }

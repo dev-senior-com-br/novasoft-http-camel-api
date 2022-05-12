@@ -45,7 +45,7 @@ public class ClienteInput extends RequestError {
      * deve estar entre 1 e 2
      */
     @JsonProperty("ageRet")
-    private Long ageRet;
+    private Long ageRet = 0L;
 
     /**
      * Apelido 1
@@ -130,7 +130,7 @@ public class ClienteInput extends RequestError {
      * deve estar entre 1 e 3
      */
     @JsonProperty("formEnt")
-    private Long formEnt;
+    private Long formEnt = 0L;
 
     /**
      * Contato Cliente
@@ -143,7 +143,7 @@ public class ClienteInput extends RequestError {
      * deve estar entre 1 e 3
      */
     @JsonProperty("nacCli")
-    private Long nacCli;
+    private Long nacCli = 0L;
 
     /**
      * Noite do Cliente
@@ -180,7 +180,7 @@ public class ClienteInput extends RequestError {
      * deve estar entre 1 e 5
      */
     @JsonProperty("tipCli")
-    private Long tipCli;
+    private Long tipCli = 0L;
 
     /**
      * Não especificado
@@ -200,7 +200,7 @@ public class ClienteInput extends RequestError {
      * deve estar entre 1 e 2
      */
     @JsonProperty("tipPer")
-    private Long tipPer;
+    private Long tipPer = 0L;
 
 
     //Campos opcionais
@@ -221,7 +221,7 @@ public class ClienteInput extends RequestError {
      * IVA(Imposto de Valor Agregado)
      */
     @JsonProperty("retIva")
-    private Long retIva;
+    private Long retIva = 0L;
 
     /**
      * Código do Vendedor
@@ -233,13 +233,13 @@ public class ClienteInput extends RequestError {
      * Capacidade de Endividamento
      */
     @JsonProperty("capEnd")
-    private Long capEnd;
+    private Long capEnd = 0L;
 
     /**
      * Vaga
      */
     @JsonProperty("cupCli")
-    private Long cupCli;
+    private Long cupCli = 0L;
 
     /**
      * Apelido 2
@@ -265,13 +265,13 @@ public class ClienteInput extends RequestError {
      * imperfeição
      */
     @JsonProperty("plaPag")
-    private Long plaPag;
+    private Long plaPag = 0L;
 
     /**
      * Gênero
      */
     @JsonProperty("genero")
-    private Long genero;
+    private Long genero = 0L;
 
     /**
      * Data de
@@ -285,11 +285,11 @@ public class ClienteInput extends RequestError {
      * em atraso
      */
     @JsonProperty("indMora")
-    private Long indMora;
+    private Long indMora = 0L;
 
     /**
      * Dias habitados
      */
     @JsonProperty("diasMora")
-    private Long diasMora;
+    private Long diasMora = 0L;
 }
