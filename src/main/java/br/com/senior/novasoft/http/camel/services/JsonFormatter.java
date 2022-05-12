@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,7 +57,7 @@ public class JsonFormatter {
             String title = (String) mapBody.get("title");
             Integer status = (Integer) mapBody.get("status");
             String traceId = (String) mapBody.get("traceId");
-            List<Object> errors = (List<Object>) mapBody.get("errors");
+            LinkedHashMap<Object, Object> errors = (LinkedHashMap<Object, Object>) mapBody.get("errors");
 
             Cliente cliente = new Cliente();
             cliente.setType(type);

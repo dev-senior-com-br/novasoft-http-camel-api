@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.camel.component.jackson.JacksonDataFormat;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Data
@@ -34,5 +35,5 @@ public class RequestError {
     public String traceId;
 
     @JsonProperty("errors")
-    public List<Object> errors;
+    public LinkedHashMap<Object, Object> errors;
 }
