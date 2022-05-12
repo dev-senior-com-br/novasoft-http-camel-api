@@ -38,7 +38,7 @@ public class ClienteInput extends RequestError {
      * Atividade econômica
      */
     @JsonProperty("actCli")
-    private String actCli;
+    private String actCli = "";
 
     /**
      * Agente de retenção
@@ -51,79 +51,79 @@ public class ClienteInput extends RequestError {
      * Apelido 1
      */
     @JsonProperty("ap1Cli")
-    private String ap1Cli;
+    private String ap1Cli = "";
 
     /**
      * Código da Cidade
      */
     @JsonProperty("codCiu")
-    private String codCiu;
+    private String codCiu = "";
 
     /**
      * Código do Consumidor
      */
     @JsonProperty("codCli")
-    private String codCli;
+    private String codCli = "";
 
     /**
      * Código do Departamento
      */
     @JsonProperty("codDep")
-    private String codDep;
+    private String codDep = "";
 
     /**
      * Código do País
      */
     @JsonProperty("codPai")
-    private String codPai;
+    private String codPai = "";
 
     /**
      * Código do Responsável
      */
     @JsonProperty("codRes")
-    private String codRes;
+    private String codRes = "";
 
     /**
      * Código da Zona
      */
     @JsonProperty("codZon")
-    private String codZon;
+    private String codZon = "";
 
     /**
      * Código do tributo
      */
     @JsonProperty("codTrib")
-    private String codTrib;
+    private String codTrib = "";
 
     /**
      * Conta contábil IFRS
      */
     @JsonProperty("codCtaNiif")
-    private String codCtaNiif;
+    private String codCtaNiif = "";
 
     /**
      * Direção
      */
     @JsonProperty("di1Cli")
-    private String di1Cli;
+    private String di1Cli = "";
 
     /**
      * Dígito de verificação
      */
     @JsonProperty("digVer")
-    private String digVer;
+    private String digVer = "";
 
     /**
      * E-mail
      */
     @JsonProperty("eMail")
-    private String eMail;
+    private String eMail = "";
 
     /**
      * Forma de pagamento
      */
     @JsonProperty("forPag")
-    private String forPag;
+    private String forPag = "";
 
     /**
      * Fatura da forma de entrega,
@@ -136,7 +136,7 @@ public class ClienteInput extends RequestError {
      * Contato Cliente
      */
     @JsonProperty("jefCom")
-    private String jefCom;
+    private String jefCom = "";
 
     /**
      * Domicilío,
@@ -149,31 +149,31 @@ public class ClienteInput extends RequestError {
      * Noite do Cliente
      */
     @JsonProperty("nitCli")
-    private String nitCli;
+    private String nitCli = "";
 
     /**
      * Nome do Cliente
      */
     @JsonProperty("nomCli")
-    private String nomCli;
+    private String nomCli = "";
 
     /**
      * Nome 1 do Cliente
      */
     @JsonProperty("nom1Cli")
-    private String nom1Cli;
+    private String nom1Cli = "";
 
     /**
      * Telefone 1 do Cliente
      */
     @JsonProperty("te1Cli")
-    private String te1Cli;
+    private String te1Cli = "";
 
     /**
      * Telefone 2 do Cliente
      */
     @JsonProperty("te2Cli")
-    private String te2Cli;
+    private String te2Cli = "";
 
     /**
      * Tipo cliente,
@@ -187,13 +187,13 @@ public class ClienteInput extends RequestError {
      * na documentação
      */
     @JsonProperty("tipIde")
-    private String tipIde;
+    private String tipIde = "";
 
     /**
      * Tipo de moeda
      */
     @JsonProperty("tipMon")
-    private String tipMon;
+    private String tipMon = "";
 
     /**
      * Tipo de pessoa,
@@ -208,13 +208,13 @@ public class ClienteInput extends RequestError {
      * Data de admissão
      */
     @JsonProperty("fecIng")
-    private String fecIng;
+    private String fecIng = "";
 
     /**
      * Conta contavél
      */
     @JsonProperty("codCta")
-    private String codCta;
+    private String codCta = "";
 
     /**
      * % de retenção de
@@ -227,7 +227,7 @@ public class ClienteInput extends RequestError {
      * Código do Vendedor
      */
     @JsonProperty("codVen")
-    private String codVen;
+    private String codVen = "";
 
     /**
      * Capacidade de Endividamento
@@ -245,20 +245,20 @@ public class ClienteInput extends RequestError {
      * Apelido 2
      */
     @JsonProperty("ap2Cli")
-    private String ap2Cli;
+    private String ap2Cli = "";
 
     /**
      * Nome 2
      */
     @JsonProperty("nom2Cli")
-    private String nom2Cli;
+    private String nom2Cli = "";
 
     /**
      * Cota de observação
      * atribuído
      */
     @JsonProperty("obsCupo")
-    private String obsCupo;
+    private String obsCupo = "";
 
     /**
      * Dias limite para
@@ -278,7 +278,7 @@ public class ClienteInput extends RequestError {
      * Aniversário
      */
     @JsonProperty("fecNac")
-    private String fecNac;
+    private String fecNac = "";
 
     /**
      * Indicador de status
