@@ -54,7 +54,8 @@ public class NovasoftHTTPRouteBuilder {
         route = route.concat("/")
             .concat(serviceEnum.getPath())
             .concat("/")
-            .concat(primitiveEnums.getPath());
+            .concat(primitiveEnums.getPath())
+            .concat("?throwExceptionOnFailure=false");
 
         log.info("URL final: {}", route);
 
