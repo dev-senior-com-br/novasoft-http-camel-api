@@ -38,7 +38,7 @@ public class ClienteInput extends RequestError {
      * Atividade econômica
      */
     @JsonProperty("actCli")
-    private String actCli = "";
+    private String actCli = "0";
 
     /**
      * Agente de retenção
@@ -81,13 +81,13 @@ public class ClienteInput extends RequestError {
      * Código do Responsável
      */
     @JsonProperty("codRes")
-    private String codRes = "";
+    private String codRes = "0";
 
     /**
      * Código da Zona
      */
     @JsonProperty("codZon")
-    private String codZon = "";
+    private String codZon = "0";
 
     /**
      * Código do tributo
@@ -99,7 +99,7 @@ public class ClienteInput extends RequestError {
      * Conta contábil IFRS
      */
     @JsonProperty("codCtaNiif")
-    private String codCtaNiif = "";
+    private String codCtaNiif = "0";
 
     /**
      * Direção
@@ -111,7 +111,7 @@ public class ClienteInput extends RequestError {
      * Dígito de verificação
      */
     @JsonProperty("digVer")
-    private String digVer = "";
+    private String digVer = "0";
 
     /**
      * E-mail
@@ -123,7 +123,7 @@ public class ClienteInput extends RequestError {
      * Forma de pagamento
      */
     @JsonProperty("forPag")
-    private String forPag = "";
+    private String forPag = "0";
 
     /**
      * Fatura da forma de entrega,
@@ -167,7 +167,7 @@ public class ClienteInput extends RequestError {
      * Telefone 1 do Cliente
      */
     @JsonProperty("te1Cli")
-    private String te1Cli = "";
+    private String te1Cli = "0";
 
     /**
      * Telefone 2 do Cliente
@@ -193,7 +193,7 @@ public class ClienteInput extends RequestError {
      * Tipo de moeda
      */
     @JsonProperty("tipMon")
-    private String tipMon = "";
+    private String tipMon = "00";
 
     /**
      * Tipo de pessoa,
@@ -214,7 +214,7 @@ public class ClienteInput extends RequestError {
      * Conta contavél
      */
     @JsonProperty("codCta")
-    private String codCta = "";
+    private String codCta = "0";
 
     /**
      * % de retenção de
@@ -227,7 +227,7 @@ public class ClienteInput extends RequestError {
      * Código do Vendedor
      */
     @JsonProperty("codVen")
-    private String codVen = "";
+    private String codVen = "0";
 
     /**
      * Capacidade de Endividamento
