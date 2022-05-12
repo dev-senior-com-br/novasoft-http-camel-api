@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.29-alpha] - 2022-05-12
+
 ## [0.0.28-alpha] - 2022-05-11
 
 ## [0.0.27-alpha] - 2022-05-09
@@ -69,7 +71,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-[Unreleased]: https://github.com/dev-senior-com-br/novasoft-http-camel-api/compare/0.0.28-alpha...HEAD
+[Unreleased]: https://github.com/dev-senior-com-br/novasoft-http-camel-api/compare/0.0.29-alpha...HEAD
+
+[0.0.29-alpha]: https://github.com/dev-senior-com-br/novasoft-http-camel-api/compare/0.0.28-alpha...0.0.29-alpha
 
 [0.0.28-alpha]: https://github.com/dev-senior-com-br/novasoft-http-camel-api/compare/0.0.27-alpha...0.0.28-alpha
 
