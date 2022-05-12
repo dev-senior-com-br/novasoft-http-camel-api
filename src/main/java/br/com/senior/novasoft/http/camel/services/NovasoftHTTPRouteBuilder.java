@@ -88,8 +88,8 @@ public class NovasoftHTTPRouteBuilder {
             log.info("Routed to {}", route);
             Exception exception = request.getException();
             if (exception != null) {
-                System.out.println(exception.getMessage());
-//                throw new NovasoftHTTPException(exception);
+               log.error(exception.getMessage());
+                System.out.println(request.getMessage().getBody());
             }
             forwardProcessor.reverse(request);
         } catch (Exception exception) {
