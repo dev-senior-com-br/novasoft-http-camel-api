@@ -50,6 +50,11 @@ public class NovasoftHTTPRouteBuilder {
         complementPrimitive = primitiveComplement.getPath() + complement;
     }
 
+    public void clearComplementPrimitive()
+    {
+        complementPrimitive = "";
+    }
+
     public void request(Exchange exchange) {
         String route = url;
 
