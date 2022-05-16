@@ -4,10 +4,11 @@ import lombok.Getter;
 
 public enum MethodEnum {
 
-    POST("post"),
-    PUT("put"),
-    GET("get"),
-    DELETE("delete");
+    POST("POST"),
+    PUT("PUT"),
+    GET("GET"),
+    DELETE("DELETE"),
+    PATCH("PATCH");
 
     @Getter
     private String path;
