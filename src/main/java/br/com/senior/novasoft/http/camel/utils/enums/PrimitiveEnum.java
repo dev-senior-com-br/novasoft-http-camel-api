@@ -23,7 +23,7 @@ public enum PrimitiveEnum {
     CLASIFICADORES_6_CONVENIOS("Clasificadores6Convenios"),//
     CLASIFICADORES_7_CONVENIOS("Clasificadores7Convenios"),//
     CLASIFICADORES_8_CONVENIOS("Clasificadores8Convenios"),//
-    CLIENTES("Clientes"),//
+    CLIENTES("Senior/Accounts"),//
     SUCERSALES_CONVENIOS("SucursalesConvenios"),//
     DEPARTAMENTOS("Departamentos"),//
     DOCUMENTOS("Documentos"),//
