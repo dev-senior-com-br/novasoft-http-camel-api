@@ -98,7 +98,6 @@ public class NovasoftHTTPRouteBuilder {
         }
         exchange.getIn().setHeader(Exchange.HTTP_URI, route);
         try (ProducerTemplate producerTemplate = exchange.getContext().createProducerTemplate()) {
-            System.out.println("Depois do template: " + exchange.getMessage().getBody());
             log.info("Routing to: {}", route);
             ForwardProcessor forwardProcessor = new ForwardProcessor(exchange);
             Exchange request = producerTemplate.request(httpComponent.createEndpoint(route), forwardProcessor);
