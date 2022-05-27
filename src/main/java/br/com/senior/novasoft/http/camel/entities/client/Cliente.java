@@ -128,6 +128,14 @@ public class Cliente extends RequestError {
     private Long tipPer = 0L;
 
     /**
+     * Estado do cliente
+     * 1 = Ativo
+     * 2 = Inativo
+     */
+    @JsonProperty("estCli")
+    private Long estCli = 2L;
+
+    /**
      * Código externo do Consumidor
      */
     @JsonProperty("codCliExtr")
