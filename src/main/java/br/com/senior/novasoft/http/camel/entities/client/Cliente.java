@@ -133,7 +133,7 @@ public class Cliente extends RequestError {
      * 2 = Inativo
      */
     @JsonProperty("estCli")
-    private Long estCli = 2L;
+    private String estCli = "2";
 
     /**
      * Código externo do Consumidor
