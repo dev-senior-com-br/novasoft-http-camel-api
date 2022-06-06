@@ -146,4 +146,10 @@ public class Cliente extends RequestError {
      */
     @JsonProperty("codCliExtr")
     private String codCliExtr;
+
+    /**
+     * Site
+     */
+    @JsonProperty("pagWeb")
+    private String pagWeb;
 }
