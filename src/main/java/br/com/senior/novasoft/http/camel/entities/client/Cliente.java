@@ -71,10 +71,16 @@ public class Cliente extends RequestError {
     private String codPai;
 
     /**
-     * Direção
+     * Endereço
      */
     @JsonProperty("di1Cli")
     private String di1Cli;
+
+    /**
+     * Bairro
+     */
+    @JsonProperty("di2Cli")
+    private String di2Cli;
 
     /**
      * Telefone 1 do Cliente
