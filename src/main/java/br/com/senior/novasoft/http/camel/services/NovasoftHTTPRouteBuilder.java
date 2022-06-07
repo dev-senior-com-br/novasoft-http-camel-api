@@ -79,7 +79,6 @@ public class NovasoftHTTPRouteBuilder {
         message.setHeader(Exchange.HTTP_METHOD, method.getPath());
         exchange.setMessage(message);
 
-        exchange.setProperty("payloadSent", exchange.getMessage().getBody(String.class));
         call(//
             route,//
             resolve(//
@@ -88,7 +87,6 @@ public class NovasoftHTTPRouteBuilder {
             ),//
             exchange//
         );
-        exchange.setProperty("payloadReceiver", exchange.getMessage().getBody(String.class));
     }
 
     private void call(String route, String insecureHost, Exchange exchange) {
