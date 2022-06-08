@@ -18,6 +18,7 @@ import org.apache.camel.Message;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.http.HttpClientConfigurer;
 import org.apache.camel.component.http.HttpComponent;
+import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.spi.PropertiesComponent;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
@@ -93,6 +94,9 @@ public class NovasoftHTTPRouteBuilder {
                 configureInsecureCall(route, insecureHost, httpComponent);
         }
         exchange.getIn().setHeader(Exchange.HTTP_URI, route);
+
+        log.info("Request " + exchange.getIn().getHeader(Exchange.HTTP_METHOD) + " to " + exchange.getIn().getHeader(Exchange.HTTP_URI));
+
         try (ProducerTemplate producerTemplate = exchange.getContext().createProducerTemplate()) {
             ForwardProcessor forwardProcessor = new ForwardProcessor(exchange);
             Exchange request = producerTemplate.request(httpComponent.createEndpoint(route), forwardProcessor);
