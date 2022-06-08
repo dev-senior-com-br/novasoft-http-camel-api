@@ -76,7 +76,7 @@ public class NovasoftHTTPRouteBuilder {
         message.setHeader(Exchange.HTTP_METHOD, method.getPath());
         exchange.setMessage(message);
 
-        Class bodyIn = (Class) exchange.getIn().getBody();
+        Object bodyIn = exchange.getIn().getBody();
         String payloadSent = exchange.getIn().getBody(String.class);
         exchange.getIn().setBody(bodyIn);
         exchange.setProperty("payloadSent", payloadSent);
@@ -92,9 +92,8 @@ public class NovasoftHTTPRouteBuilder {
             exchange//
         );
 
-        Class bodyOut = (Class) exchange.getMessage().getBody();
         String payloadReceiver = exchange.getMessage().getBody(String.class);
-        exchange.getMessage().setBody(bodyOut);
+        exchange.getMessage().setBody(payloadReceiver);
         exchange.setProperty("payloadReceiver", payloadReceiver);
 
         log.info("Request " + exchange.getIn().getHeader(Exchange.HTTP_METHOD) + " to " + exchange.getIn().getHeader(Exchange.HTTP_URI) + " with payload receiver " + payloadReceiver);

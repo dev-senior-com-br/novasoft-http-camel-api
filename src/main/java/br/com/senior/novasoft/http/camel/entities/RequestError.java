@@ -11,6 +11,7 @@ import org.apache.camel.component.jackson.JacksonDataFormat;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -35,5 +36,5 @@ public class RequestError {
     public String traceId;
 
     @JsonProperty("errors")
-    public LinkedHashMap<Object, Object> errors;
+    public List<Map<Object, Object>> errors;
 }
