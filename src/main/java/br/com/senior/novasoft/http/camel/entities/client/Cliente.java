@@ -152,4 +152,10 @@ public class Cliente extends RequestError {
      */
     @JsonProperty("pagWeb")
     private String pagWeb;
+
+    /**
+     * Código verificador do NIT
+     */
+    @JsonProperty("digVer")
+    private String digVer;
 }
