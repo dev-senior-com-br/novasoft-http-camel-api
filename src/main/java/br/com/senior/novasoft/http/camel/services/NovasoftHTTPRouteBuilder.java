@@ -76,6 +76,13 @@ public class NovasoftHTTPRouteBuilder {
         message.setHeader(Exchange.HTTP_METHOD, method.getPath());
         exchange.setMessage(message);
 
+        Object bodyIn = exchange.getIn().getBody();
+        String payloadSent = exchange.getIn().getBody(String.class);
+        exchange.getIn().setBody(bodyIn);
+        exchange.setProperty("payloadSent", payloadSent);
+
+        log.info("Request " + message.getHeader(Exchange.HTTP_METHOD) + " to " + route + " with payload sent " + payloadSent);
+
         call(//
             route,//
             resolve(//
@@ -84,6 +91,13 @@ public class NovasoftHTTPRouteBuilder {
             ),//
             exchange//
         );
+
+        Object bodyOut = exchange.getMessage().getBody();
+        String payloadReceiver = exchange.getMessage().getBody(String.class);
+        exchange.getMessage().setBody(bodyOut);
+        exchange.setProperty("payloadReceiver", payloadReceiver);
+
+        log.info("Request " + exchange.getIn().getHeader(Exchange.HTTP_METHOD) + " to " + exchange.getIn().getHeader(Exchange.HTTP_URI) + " with payload receiver " + payloadReceiver);
     }
 
     private void call(String route, String insecureHost, Exchange exchange) {
@@ -94,8 +108,6 @@ public class NovasoftHTTPRouteBuilder {
                 configureInsecureCall(route, insecureHost, httpComponent);
         }
         exchange.getIn().setHeader(Exchange.HTTP_URI, route);
-
-        log.info("Request " + exchange.getIn().getHeader(Exchange.HTTP_METHOD) + " to " + exchange.getIn().getHeader(Exchange.HTTP_URI));
 
         try (ProducerTemplate producerTemplate = exchange.getContext().createProducerTemplate()) {
             ForwardProcessor forwardProcessor = new ForwardProcessor(exchange);

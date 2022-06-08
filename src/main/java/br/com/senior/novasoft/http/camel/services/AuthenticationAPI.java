@@ -59,12 +59,7 @@ public class AuthenticationAPI {
             .log(HEADERS_LOG) //
             .process(this::searchToken) //
             .choice() // Token found
-            .when(//
-                routeBuilder.method(//
-                    this,//
-                    "tokenFound"//
-                )//
-            )//
+            .when(routeBuilder.method(this, "tokenFound"))//
             .setExchangePattern(InOut) //
             .to(DIRECT_TOKEN_FOUND) //
             .otherwise() // Token not found
