@@ -57,7 +57,7 @@ public class JsonFormatter {
             String title = (String) mapBody.get("title");
             Integer status = (Integer) mapBody.get("status");
             String traceId = (String) mapBody.get("traceId");
-            LinkedHashMap<Object, Object> errors = (LinkedHashMap<Object, Object>) mapBody.get("errors");
+            List<Map<Object, Object>> errors = (List<Map<Object, Object>>) mapBody.get("errors");
 
             Cliente cliente = new Cliente();
             cliente.setType(type);
