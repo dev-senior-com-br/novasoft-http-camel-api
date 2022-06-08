@@ -24,8 +24,6 @@ public class ForwardProcessor implements Processor {
         Message message = dest.getMessage();
         message.setBody(sourceMessage.getBody());
         sourceMessage.getHeaders().forEach((key, value) -> message.setHeader(key, value));
-        log.info("Body {}", message.getBody());
-        log.info("Headers {}", message.getHeaders());
     }
 
     public void reverse(Exchange exchange) {

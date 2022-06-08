@@ -58,8 +58,6 @@ public class NovasoftHTTPRouteBuilder {
     public void request(Exchange exchange) {
         String route = url;
 
-        log.info("URL initial: {}", route);
-
         if (route == null)
             throw new NovasoftHTTPException("URL property not configured");
 
@@ -71,8 +69,6 @@ public class NovasoftHTTPRouteBuilder {
             .concat(primitiveEnum.getPath())
             .concat(complementPrimitive)
             .concat("?throwExceptionOnFailure=false");
-
-        log.info("URL final: {}", route);
 
         Message message = exchange.getMessage();
         message.setHeader("Content-Type", "application/json");
@@ -98,10 +94,8 @@ public class NovasoftHTTPRouteBuilder {
         }
         exchange.getIn().setHeader(Exchange.HTTP_URI, route);
         try (ProducerTemplate producerTemplate = exchange.getContext().createProducerTemplate()) {
-            log.info("Routing to: {}", route);
             ForwardProcessor forwardProcessor = new ForwardProcessor(exchange);
             Exchange request = producerTemplate.request(httpComponent.createEndpoint(route), forwardProcessor);
-            log.info("Routed to: {}", route);
             Exception exception = request.getException();
             if (exception != null) {
                 log.error(exception.getMessage());
