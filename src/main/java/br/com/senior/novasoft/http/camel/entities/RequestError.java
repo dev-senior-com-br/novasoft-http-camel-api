@@ -36,5 +36,5 @@ public class RequestError {
     public String traceId;
 
     @JsonProperty("errors")
-    public List<Map<Object, Object>> errors;
+    public String errors;
 }
