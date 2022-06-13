@@ -49,7 +49,7 @@ public class AuthenticationAPI {
     }
 
     public void prepare(Processor enrichWithToken) {
-        tokenFound();
+//        tokenFound();
         tokenNotFound();
         login();
         routeBuilder //
@@ -67,6 +67,7 @@ public class AuthenticationAPI {
 //            .to(DIRECT_TOKEN_NOT_FOUND) //
 //            .end() // Token found
 //            .process(enrichWithToken) //
+            .setExchangePattern(InOut) //
             .to(DIRECT_TOKEN_NOT_FOUND)
         ;
     }
