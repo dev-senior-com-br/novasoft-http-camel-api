@@ -96,7 +96,7 @@ public class NovasoftHTTPRouteBuilder {
         exchange.getMessage().setBody(payloadReceiver);
         exchange.setProperty("payloadReceiver", payloadReceiver);
 
-        log.info("Request " + exchange.getIn().getHeader(Exchange.HTTP_METHOD) + " to " + exchange.getIn().getHeader(Exchange.HTTP_URI) + " with payload receiver " + payloadReceiver);
+        log.info("Request " + exchange.getIn().getHeader(Exchange.HTTP_METHOD) + " to " + exchange.getIn().getHeader(Exchange.HTTP_URI) + " with Status Code " + exchange.getIn().getHeader(Exchange.HTTP_RESPONSE_CODE) + " and payload receiver " + payloadReceiver);
     }
 
     private void call(String route, String insecureHost, Exchange exchange) {
