@@ -110,17 +110,12 @@ public class AuthenticationAPI {
 
         routeBuilder //
             .from(DIRECT_LOGIN) //
-            .process(exchange -> login.setUrl(url))
+            .process(exchange -> login.setUrl(url)) //
             .routeId("login-novasoft") //
             .marshal(LOGIN_INPUT_FORMAT) //
             .setExchangePattern(InOut) //
             .process(login::request) //
-            .choice()
-            .when(this::isError500)
-            .log("API Novasoft not working!")
-            .otherwise()
-            .to(directResponse)
-            .endRest()
+            .to(directResponse) //
         ;
     }
 
@@ -157,22 +152,29 @@ public class AuthenticationAPI {
 
     private void unmarshallToken(Exchange exchange) {
         Exception exception = exchange.getException();
+        System.out.println("1");
         if (exception != null) {
             throw new AuthenticationException(exception);
+        } else {
+            System.out.println("2");
+            LoginOutput output = exchange.getMessage().getBody(LoginOutput.class);
+
+            if (output.getToken() == null) {
+                System.out.println("3");
+                throw new AuthenticationException(output.getStatus() + ": " + output.getTitle());
+            } else {
+                System.out.println("4");
+                OffsetDateTime odt = OffsetDateTime.parse(output.getExpiration());
+                Date date = new Date(odt.getYear(), odt.getMonthValue(), odt.getDayOfMonth());
+                output.setExpireTime(now() + ((date.getTime() - TOKEN_EXPIRATION_MARGIN) * 1000));
+                TOKEN_CACHE.put(exchange.getProperty(TOKEN_CACHE_KEY).toString(), output);
+                System.out.println(output);
+                exchange.setProperty(TOKEN, output);
+                System.out.println(exchange.getProperty(TOKEN));
+                exchange.getMessage().setBody(output);
+                addAuthorization(exchange);
+            }
         }
-        LoginOutput output = (LoginOutput) exchange.getMessage().getBody();
-        if (output.getToken() == null) {
-            throw new AuthenticationException(output.getStatus() + ": " + output.getTitle());
-        }
-        OffsetDateTime odt = OffsetDateTime.parse(output.getExpiration());
-        Date date = new Date(odt.getYear(), odt.getMonthValue(), odt.getDayOfMonth());
-        output.setExpireTime(now() + ((date.getTime() - TOKEN_EXPIRATION_MARGIN) * 1000));
-        TOKEN_CACHE.put(exchange.getProperty(TOKEN_CACHE_KEY).toString(), output);
-        System.out.println(output);
-        exchange.setProperty(TOKEN, output);
-        System.out.println(exchange.getProperty(TOKEN));
-        exchange.getMessage().setBody(output);
-        addAuthorization(exchange);
     }
 
     private long now() {
