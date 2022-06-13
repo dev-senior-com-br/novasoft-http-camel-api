@@ -49,26 +49,24 @@ public class AuthenticationAPI {
     }
 
     public void prepare(Processor enrichWithToken) {
-//        tokenFound();
+        tokenFound();
         tokenNotFound();
         login();
         routeBuilder //
             .from(directImpl) //
             .routeId(AUTHENTICATE) //
-//            .to("log:authenticate") //
-//            .log(HEADERS_LOG) //
-//            .process(this::searchToken) //
-//            .choice() // Token found
-//            .when(routeBuilder.method(this, "tokenFound"))//
-//            .setExchangePattern(InOut) //
-//            .to(DIRECT_TOKEN_FOUND) //
-//            .otherwise() // Token not found
-//            .setExchangePattern(InOut) //
-//            .to(DIRECT_TOKEN_NOT_FOUND) //
-//            .end() // Token found
-//            .process(enrichWithToken) //
+            .to("log:authenticate") //
+            .log(HEADERS_LOG) //
+            .process(this::searchToken) //
+            .choice() // Token found
+            .when(routeBuilder.method(this, "tokenFound"))//
             .setExchangePattern(InOut) //
-            .to(DIRECT_TOKEN_NOT_FOUND)
+            .to(DIRECT_TOKEN_FOUND) //
+            .otherwise() // Token not found
+            .setExchangePattern(InOut) //
+            .to(DIRECT_TOKEN_NOT_FOUND) //
+            .end() // Token found
+            .process(enrichWithToken) //
         ;
     }
 
@@ -85,8 +83,6 @@ public class AuthenticationAPI {
             .when(routeBuilder.method(this, "isExpiredToken")) //
             .setExchangePattern(InOut) //
             .to(DIRECT_TOKEN_NOT_FOUND) //
-            .unmarshal(LoginOutput.LOGIN_OUTPUT_FORMAT) //
-            .process(this::unmarshallToken) //
             .end() // Expired token
         ;
     }
@@ -157,7 +153,7 @@ public class AuthenticationAPI {
             throw new AuthenticationException(exception);
         } else {
             System.out.println("2");
-            LoginOutput output = exchange.getMessage().getBody(LoginOutput.class);
+            LoginOutput output = (LoginOutput) exchange.getMessage().getBody();
 
             if (output.getToken() == null) {
                 System.out.println("3");
