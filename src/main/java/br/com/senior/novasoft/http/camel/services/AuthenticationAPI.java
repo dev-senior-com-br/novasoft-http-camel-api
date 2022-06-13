@@ -68,7 +68,6 @@ public class AuthenticationAPI {
 //            .end() // Token found
 //            .process(enrichWithToken) //
             .to(DIRECT_LOGIN)
-            .to(directResponse) //
         ;
     }
 
@@ -81,13 +80,10 @@ public class AuthenticationAPI {
         routeBuilder //
             .from(DIRECT_TOKEN_FOUND) //
             .routeId("token-found-novasoft") //
-            .to("log:tokenFound") //
             .choice() // Expired token
             .when(routeBuilder.method(this, "isExpiredToken")) //
-            .to("log:tokenExpired") //
             .setExchangePattern(InOut) //
             .to(DIRECT_TOKEN_NOT_FOUND) //
-            .to("log:refreshedToken") //
             .unmarshal(LoginOutput.LOGIN_OUTPUT_FORMAT) //
             .process(this::unmarshallToken) //
             .end() // Expired token
@@ -98,10 +94,8 @@ public class AuthenticationAPI {
         routeBuilder //
             .from(DIRECT_TOKEN_NOT_FOUND) //
             .routeId("token-not-found-novasoft") //
-            .to("log:tokenNotFound") //
             .setExchangePattern(InOut) //
             .to(DIRECT_LOGIN) //
-            .to("log:authenticated") //
             .unmarshal(LoginOutput.LOGIN_OUTPUT_FORMAT) //
             .process(this::unmarshallToken) //
         ;
@@ -123,8 +117,9 @@ public class AuthenticationAPI {
             .choice()
             .when(this::isError500)
             .log("API Novasoft not working!")
+            .otherwise()
+            .to(directResponse)
             .endRest()
-            .to("log:logged") //
         ;
     }
 
