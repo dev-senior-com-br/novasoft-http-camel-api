@@ -168,7 +168,9 @@ public class AuthenticationAPI {
         Date date = new Date(odt.getYear(), odt.getMonthValue(), odt.getDayOfMonth());
         output.setExpireTime(now() + ((date.getTime() - TOKEN_EXPIRATION_MARGIN) * 1000));
         TOKEN_CACHE.put(exchange.getProperty(TOKEN_CACHE_KEY).toString(), output);
+        System.out.println(output);
         exchange.setProperty(TOKEN, output);
+        System.out.println(exchange.getProperty(TOKEN));
         exchange.getMessage().setBody(output);
         addAuthorization(exchange);
     }
