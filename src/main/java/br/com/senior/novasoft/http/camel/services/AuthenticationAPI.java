@@ -55,18 +55,19 @@ public class AuthenticationAPI {
         routeBuilder //
             .from(directImpl) //
             .routeId(AUTHENTICATE) //
-            .to("log:authenticate") //
-            .log(HEADERS_LOG) //
-            .process(this::searchToken) //
-            .choice() // Token found
-            .when(routeBuilder.method(this, "tokenFound"))//
-            .setExchangePattern(InOut) //
-            .to(DIRECT_TOKEN_FOUND) //
-            .otherwise() // Token not found
-            .setExchangePattern(InOut) //
-            .to(DIRECT_TOKEN_NOT_FOUND) //
-            .end() // Token found
-            .process(enrichWithToken) //
+//            .to("log:authenticate") //
+//            .log(HEADERS_LOG) //
+//            .process(this::searchToken) //
+//            .choice() // Token found
+//            .when(routeBuilder.method(this, "tokenFound"))//
+//            .setExchangePattern(InOut) //
+//            .to(DIRECT_TOKEN_FOUND) //
+//            .otherwise() // Token not found
+//            .setExchangePattern(InOut) //
+//            .to(DIRECT_TOKEN_NOT_FOUND) //
+//            .end() // Token found
+//            .process(enrichWithToken) //
+            .to(DIRECT_LOGIN)
             .to(directResponse) //
         ;
     }
@@ -81,15 +82,12 @@ public class AuthenticationAPI {
             .from(DIRECT_TOKEN_FOUND) //
             .routeId("token-found-novasoft") //
             .to("log:tokenFound") //
-            .log(HEADERS_LOG) //
             .choice() // Expired token
             .when(routeBuilder.method(this, "isExpiredToken")) //
             .to("log:tokenExpired") //
-            .log(HEADERS_LOG) //
             .setExchangePattern(InOut) //
             .to(DIRECT_TOKEN_NOT_FOUND) //
             .to("log:refreshedToken") //
-            .log(HEADERS_LOG) //
             .unmarshal(LoginOutput.LOGIN_OUTPUT_FORMAT) //
             .process(this::unmarshallToken) //
             .end() // Expired token
@@ -101,11 +99,9 @@ public class AuthenticationAPI {
             .from(DIRECT_TOKEN_NOT_FOUND) //
             .routeId("token-not-found-novasoft") //
             .to("log:tokenNotFound") //
-            .log(HEADERS_LOG) //
             .setExchangePattern(InOut) //
             .to(DIRECT_LOGIN) //
             .to("log:authenticated") //
-            .log(HEADERS_LOG) //
             .unmarshal(LoginOutput.LOGIN_OUTPUT_FORMAT) //
             .process(this::unmarshallToken) //
         ;
@@ -122,12 +118,9 @@ public class AuthenticationAPI {
             .process(exchange -> login.setUrl(url))
             .routeId("login-novasoft") //
             .marshal(LOGIN_INPUT_FORMAT) //
-            .to("log:login") //
-            .log(HEADERS_LOG) //
             .setExchangePattern(InOut) //
             .process(login::request) //
             .to("log:logged") //
-            .log(HEADERS_LOG) //
         ;
     }
 
@@ -182,5 +175,10 @@ public class AuthenticationAPI {
 
     private long now() {
         return new Date().getTime();
+    }
+
+    public boolean isError500(Exchange exchange)
+    {
+        return exchange.getMessage().getHeader(Exchange.HTTP_RESPONSE_CODE).toString().equals("500");
     }
 }
