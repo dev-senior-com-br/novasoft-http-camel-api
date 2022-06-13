@@ -120,6 +120,10 @@ public class AuthenticationAPI {
             .marshal(LOGIN_INPUT_FORMAT) //
             .setExchangePattern(InOut) //
             .process(login::request) //
+            .choice()
+            .when(this::isError500)
+            .log("API Novasoft not working!")
+            .endRest()
             .to("log:logged") //
         ;
     }
