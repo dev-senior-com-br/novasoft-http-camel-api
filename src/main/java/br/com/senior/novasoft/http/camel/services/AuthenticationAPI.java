@@ -67,7 +67,7 @@ public class AuthenticationAPI {
 //            .to(DIRECT_TOKEN_NOT_FOUND) //
 //            .end() // Token found
 //            .process(enrichWithToken) //
-            .to(DIRECT_LOGIN)
+            .to(DIRECT_TOKEN_NOT_FOUND)
         ;
     }
 
