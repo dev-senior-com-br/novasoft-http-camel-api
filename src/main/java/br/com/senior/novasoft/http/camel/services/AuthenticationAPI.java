@@ -56,7 +56,6 @@ public class AuthenticationAPI {
             .from(directImpl) //
             .routeId(AUTHENTICATE) //
             .to("log:authenticate") //
-            .log(HEADERS_LOG) //
             .process(this::searchToken) //
             .choice() // Token found
             .when(routeBuilder.method(this, "tokenFound"))//
@@ -67,6 +66,7 @@ public class AuthenticationAPI {
             .to(DIRECT_TOKEN_NOT_FOUND) //
             .end() // Token found
             .process(enrichWithToken) //
+            .to(directResponse) //
         ;
     }
 
@@ -79,10 +79,15 @@ public class AuthenticationAPI {
         routeBuilder //
             .from(DIRECT_TOKEN_FOUND) //
             .routeId("token-found-novasoft") //
+            .to("log:tokenFound") //
             .choice() // Expired token
             .when(routeBuilder.method(this, "isExpiredToken")) //
+            .to("log:tokenExpired") //
             .setExchangePattern(InOut) //
             .to(DIRECT_TOKEN_NOT_FOUND) //
+            .to("log:refreshedToken") //
+            .unmarshal(LoginOutput.LOGIN_OUTPUT_FORMAT) //
+            .process(this::unmarshallToken) //
             .end() // Expired token
         ;
     }
@@ -91,8 +96,10 @@ public class AuthenticationAPI {
         routeBuilder //
             .from(DIRECT_TOKEN_NOT_FOUND) //
             .routeId("token-not-found-novasoft") //
+            .to("log:tokenNotFound") //
             .setExchangePattern(InOut) //
             .to(DIRECT_LOGIN) //
+            .to("log:authenticated") //
             .unmarshal(LoginOutput.LOGIN_OUTPUT_FORMAT) //
             .process(this::unmarshallToken) //
         ;
@@ -109,9 +116,10 @@ public class AuthenticationAPI {
             .process(exchange -> login.setUrl(url)) //
             .routeId("login-novasoft") //
             .marshal(LOGIN_INPUT_FORMAT) //
+            .to("log:login") //
             .setExchangePattern(InOut) //
             .process(login::request) //
-            .to(directResponse) //
+            .to("log:logged") //
         ;
     }
 
@@ -148,37 +156,23 @@ public class AuthenticationAPI {
 
     private void unmarshallToken(Exchange exchange) {
         Exception exception = exchange.getException();
-        System.out.println("1");
         if (exception != null) {
             throw new AuthenticationException(exception);
-        } else {
-            System.out.println("2");
-            LoginOutput output = (LoginOutput) exchange.getMessage().getBody();
-
-            if (output.getToken() == null) {
-                System.out.println("3");
-                throw new AuthenticationException(output.getStatus() + ": " + output.getTitle());
-            } else {
-                System.out.println("4");
-                OffsetDateTime odt = OffsetDateTime.parse(output.getExpiration());
-                Date date = new Date(odt.getYear(), odt.getMonthValue(), odt.getDayOfMonth());
-                output.setExpireTime(now() + ((date.getTime() - TOKEN_EXPIRATION_MARGIN) * 1000));
-                TOKEN_CACHE.put(exchange.getProperty(TOKEN_CACHE_KEY).toString(), output);
-                System.out.println(output);
-                exchange.setProperty(TOKEN, output);
-                System.out.println(exchange.getProperty(TOKEN));
-                exchange.getMessage().setBody(output);
-                addAuthorization(exchange);
-            }
         }
+        LoginOutput output = (LoginOutput) exchange.getMessage().getBody();
+        if (output.getToken() == null) {
+            throw new AuthenticationException(output.getStatus() + ": " + output.getTitle());
+        }
+        OffsetDateTime odt = OffsetDateTime.parse(output.getExpiration());
+        Date date = new Date(odt.getYear(), odt.getMonthValue(), odt.getDayOfMonth());
+        output.setExpireTime(now() + ((date.getTime() - TOKEN_EXPIRATION_MARGIN) * 1000));
+        TOKEN_CACHE.put(exchange.getProperty(TOKEN_CACHE_KEY).toString(), output);
+        exchange.setProperty(TOKEN, output);
+        exchange.getMessage().setBody(output);
+        addAuthorization(exchange);
     }
 
     private long now() {
         return new Date().getTime();
-    }
-
-    public boolean isError500(Exchange exchange)
-    {
-        return exchange.getMessage().getHeader(Exchange.HTTP_RESPONSE_CODE).toString().equals("500");
     }
 }
