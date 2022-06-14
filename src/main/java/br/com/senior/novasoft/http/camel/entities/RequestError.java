@@ -36,5 +36,5 @@ public class RequestError {
     public String traceId;
 
     @JsonProperty("errors")
-    public String errors;
+    public Object errors;
 }
