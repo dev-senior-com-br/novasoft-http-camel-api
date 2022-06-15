@@ -4,25 +4,27 @@ import lombok.Getter;
 
 @Getter
 public enum FromToFieldsAccountEnum {
-    codCli("Codigo de cliente"),
-    nomCli("Nombre / Razón Social"),
-    nom1Cli("Nombre / Razón Social"),
-    nitCli("NIT"),
-    codCiu("Ciudad"),
-    codDep("Departamento"),
-    codPai("País"),
-    di1Cli("Dirección"),
-    di2Cli("Distrito"),
-    te1Cli("Teléfono"),
-    tipCli("Tipo de cuenta"),
-    eMail("Correo electrónico general"),
-    ap1Cli("Nombre Corto"),
-    tipPer("Tipo de persona"),
-    estCli("Activo"),
-    pagWeb("Sitio web")
-    ;
-    private String name;
-    FromToFieldsAccountEnum(String name) {
+    codCli("Codigo de cliente", "CodCli"),
+    nomCli("Nombre / Razón Social", "NomCli"),
+    nom1Cli("Nombre / Razón Social", "Nom1Cli"),
+    nitCli("NIT", "NitCli"),
+    codCiu("Ciudad", "CodCiu"),
+    codDep("Departamento", "CodDep"),
+    codPai("País", "CodPai"),
+    di1Cli("Dirección", "Di1Cli"),
+    di2Cli("Distrito", "Di2Cli"),
+    te1Cli("Teléfono", "Te1Cli"),
+    tipCli("Tipo de cuenta", "TipCli"),
+    eMail("Correo electrónico general", "EMail"),
+    ap1Cli("Nombre Corto", "Ap1Cli"),
+    tipPer("Tipo de persona", "TipPer"),
+    estCli("Activo", "EstCli"),
+    pagWeb("Sitio web", "PagWeb");
+    private final String name;
+    private final String errorName;
+
+    FromToFieldsAccountEnum(String name, String errorName) {
         this.name = name;
+        this.errorName = errorName;
     }
 }
