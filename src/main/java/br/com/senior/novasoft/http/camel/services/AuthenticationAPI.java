@@ -60,7 +60,8 @@ public class AuthenticationAPI {
             .choice() // Token found
             .when(routeBuilder.method(this, "tokenFound"))//
             .setExchangePattern(InOut) //
-            .to(DIRECT_TOKEN_FOUND) //
+//            .to(DIRECT_TOKEN_FOUND) //
+            .to(DIRECT_TOKEN_NOT_FOUND) //
             .otherwise() // Token not found
             .setExchangePattern(InOut) //
             .to(DIRECT_TOKEN_NOT_FOUND) //
