@@ -56,7 +56,7 @@ public class AuthenticationAPI {
             .from(directImpl) //
             .routeId(AUTHENTICATE) //
             .to("log:authenticate") //
-//            .process(this::searchToken) //
+            .process(this::searchToken) //
 //            .choice() // Token found
 //            .when(routeBuilder.method(this, "tokenFound"))//
 //            .setExchangePattern(InOut) //
