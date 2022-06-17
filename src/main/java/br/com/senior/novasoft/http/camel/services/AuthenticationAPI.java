@@ -57,14 +57,14 @@ public class AuthenticationAPI {
             .routeId(AUTHENTICATE) //
             .to("log:authenticate") //
             .process(this::searchToken) //
-//            .choice() // Token found
-//            .when(routeBuilder.method(this, "tokenFound"))//
-//            .setExchangePattern(InOut) //
-//            .to(DIRECT_TOKEN_FOUND) //
-//            .otherwise() // Token not found
-//            .setExchangePattern(InOut) //
+            .choice() // Token found
+            .when(routeBuilder.method(this, "tokenFound"))//
+            .setExchangePattern(InOut) //
+            .to(DIRECT_TOKEN_FOUND) //
+            .otherwise() // Token not found
+            .setExchangePattern(InOut) //
             .to(DIRECT_TOKEN_NOT_FOUND) //
-//            .end() // Token found
+            .end() // Token found
             .process(enrichWithToken) //
             .to(directResponse) //
         ;
