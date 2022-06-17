@@ -31,7 +31,7 @@ public class Authentication
     @Setter
     private String url;
 
-    void prepare()
+    public void prepare()
     {
         prepareLogin();
 
