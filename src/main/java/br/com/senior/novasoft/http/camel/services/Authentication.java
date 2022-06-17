@@ -56,6 +56,7 @@ public class Authentication
         routeBuilder
             .from(AuthenticationApiConstants.DIRECT_LOGIN)
             .process(exchange -> login.setUrl(url))
+            .marshal(LoginInput.LOGIN_INPUT_FORMAT)
             .process(login::request)
             .unmarshal(LoginOutput.LOGIN_OUTPUT_FORMAT)
             .choice()
