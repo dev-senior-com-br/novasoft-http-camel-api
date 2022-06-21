@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.senior</groupId>
 	<artifactId>novasoft-http-camel-api</artifactId>
-	<version>0.0.89-alpha</version>
+	<version>0.0.90-alpha</version>
 	<packaging>jar</packaging>
 
 	<name>Novasoft HTTP Camel API</name>
