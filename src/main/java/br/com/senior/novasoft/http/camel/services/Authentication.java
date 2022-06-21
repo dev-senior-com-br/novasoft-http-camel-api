@@ -19,8 +19,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Slf4j
-public class Authentication
-{
+public class Authentication {
     @NonNull
     private final RouteBuilder routeBuilder;
     private final UUID id = UUID.randomUUID();
@@ -29,10 +28,9 @@ public class Authentication
     @Getter
     private final String directResponse = AuthenticationApiConstants.DIRECT_NOVASOFT_IMPL_RESPONSE.concat(id.toString());
     @Setter
-    private String url;
+    private String propertyUrl;
 
-    public void prepare()
-    {
+    public void prepare() {
         prepareLogin();
 
         routeBuilder
@@ -46,8 +44,7 @@ public class Authentication
         ;
     }
 
-    private void prepareLogin()
-    {
+    private void prepareLogin() {
         NovasoftHTTPRouteBuilder login = new NovasoftHTTPRouteBuilder();
         login.setMethod(MethodEnum.POST);
         login.setServiceEnum(ServiceEnum.CUENTA);
@@ -55,7 +52,7 @@ public class Authentication
 
         routeBuilder
             .from(AuthenticationApiConstants.DIRECT_LOGIN)
-            .process(exchange -> login.setUrl(url))
+            .process(exchange -> login.setUrl(exchange.getProperty(propertyUrl, null, String.class)))
             .marshal(LoginInput.LOGIN_INPUT_FORMAT)
             .process(login::request)
             .unmarshal(LoginOutput.LOGIN_OUTPUT_FORMAT)
@@ -70,19 +67,16 @@ public class Authentication
         ;
     }
 
-    private boolean settedLoginInputInBody(Exchange exchange)
-    {
+    private boolean settedLoginInputInBody(Exchange exchange) {
         Message message = exchange.getMessage();
         return message.getBody() instanceof LoginInput;
     }
 
-    private boolean isRequestGenerateTokenSuccessful(Exchange exchange)
-    {
+    private boolean isRequestGenerateTokenSuccessful(Exchange exchange) {
         return exchange.getMessage().getHeader(Exchange.HTTP_RESPONSE_CODE, Integer.class).equals(200);
     }
 
-    public static void addAuthorization(Exchange exchange)
-    {
+    public static void addAuthorization(Exchange exchange) {
         LoginOutput loginOutput = exchange.getProperty(AuthenticationApiConstants.TOKEN, LoginOutput.class);
         exchange.getMessage().setHeader("Authorization", "Bearer " + loginOutput.getToken());
     }
