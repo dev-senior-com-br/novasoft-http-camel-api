@@ -9,10 +9,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.camel.component.jackson.JacksonDataFormat;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
+/**
+ * <h1>DTO de erro das requisições da Novasoft.</h1>
+ *
+ * <p>DTO referente a resposta de erro vindo da
+ * Novasoft. Casso aconteça algum erro na requisição
+ * esse corpo é retornado.</p>
+ *
+ * @author lucas.nunes
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,18 +28,33 @@ public class RequestError {
 
     public static final JacksonDataFormat REQUEST_ERROR_FORMAT = new JacksonDataFormat(RequestError.class);
 
+    /**
+     * Tipo de erro.
+     */
     @JsonProperty("type")
-    public String type;
+    private String type;
 
+    /**
+     * Titulo do erro
+     */
     @JsonProperty("title")
-    public String title;
+    private String title;
 
+    /**
+     * Status da requisição
+     */
     @JsonProperty("status")
-    public Integer status;
+    private Integer status;
 
+    /**
+     * Id do erro
+     */
     @JsonProperty("traceId")
-    public String traceId;
+    private String traceId;
 
+    /**
+     * Erros que ocorreram.
+     */
     @JsonProperty("errors")
-    public Object errors;
+    private Object errors;
 }
