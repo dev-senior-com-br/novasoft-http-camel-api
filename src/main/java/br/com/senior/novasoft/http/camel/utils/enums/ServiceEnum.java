@@ -12,7 +12,8 @@ public enum ServiceEnum {
 
     GEN("GEN"), //
     CUENTA("cuenta"), //
-    CXC("CXC"); //
+    CXC("CXC"), //
+    INV("INV");
 
     private String path;
 
